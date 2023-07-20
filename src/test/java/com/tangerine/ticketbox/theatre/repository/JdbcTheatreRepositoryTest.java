@@ -2,14 +2,10 @@ package com.tangerine.ticketbox.theatre.repository;
 
 import com.tangerine.ticketbox.global.exception.SqlException;
 import com.tangerine.ticketbox.theatre.TheatreTestData;
-import com.tangerine.ticketbox.theatre.model.AgeRate;
-import com.tangerine.ticketbox.theatre.model.Genre;
 import com.tangerine.ticketbox.theatre.model.Theatre;
-import com.tangerine.ticketbox.theatre.model.TheatreName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
@@ -18,11 +14,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchException;
 
 @JdbcTest
 @ActiveProfiles("test")
@@ -34,7 +28,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하지 않는 공연 추가 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void insert_NotExistTheatre_InsertTheatre(Theatre theatre) {
 
         repository.insert(theatre);
@@ -45,7 +39,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연 추가 시 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void insert_ExistTheatre_Exception(Theatre theatre) {
         repository.insert(theatre);
 
@@ -56,19 +50,19 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연 업데이트 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void update_ExistTheatre_UpdateTheatre(Theatre theatre) {
         repository.insert(theatre);
 
-        repository.update(TheatreTestData.newTheatre(theatre));
+        repository.update(TheatreTestData.newDomain(theatre));
 
         Theatre result = repository.findById(theatre.theatreId());
-        assertThat(result).isEqualTo(TheatreTestData.newTheatre(theatre));
+        assertThat(result).isEqualTo(TheatreTestData.newDomain(theatre));
     }
 
     @ParameterizedTest
     @DisplayName("존재하지 않는 공연 업데이트 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void update_NotExistTheatre_Exception(Theatre theatre) {
 
         Exception exception = catchException(() -> repository.update(theatre));
@@ -88,7 +82,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연을 아이디로 삭제 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void deleteById_ExistTheatreId_DeleteTheatre(Theatre theatre) {
         repository.insert(theatre);
 
@@ -100,7 +94,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하지 않는 공연을 아이디로 삭제 시 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void deleteById_NotExistTheatreId_Exception(Theatre theatre) {
 
         repository.deleteById(theatre.theatreId());
@@ -111,7 +105,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("모든 공연을 조회한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findAll_Void_ReturnTheatreList(Theatre theatre) {
         repository.insert(theatre);
 
@@ -122,7 +116,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연을 아이디로 조회 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findById_ExistTheatre_ReturnTheatre(Theatre theatre) {
         repository.insert(theatre);
 
@@ -133,7 +127,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하지 않는 공연을 아이디로 조회 시 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findById_NotExistTheatre_ReturnNull(Theatre theatre) {
 
         Exception exception = catchException(() -> repository.findById(theatre.theatreId()));
@@ -143,7 +137,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연을 이름으로 조회 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findByName_ExistTheatre_ReturnTheatre(Theatre theatre) {
         repository.insert(theatre);
 
@@ -154,7 +148,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하지 않는 공연을 이름으로 조회 시 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findByName_NotExistTheatre_ReturnNull(Theatre theatre) {
 
         Exception exception = catchException(() -> repository.findByName(theatre.theatreName()));
@@ -164,7 +158,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연을 날짜로 조회 시 성공한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findByDate_ExistTheatre_ReturnTheatre(Theatre theatre) {
         repository.insert(theatre);
 
@@ -175,7 +169,7 @@ class JdbcTheatreRepositoryTest {
 
     @ParameterizedTest
     @DisplayName("존재하는 공연을 날짜로 조회 시 실패한다.")
-    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideTheatres")
+    @MethodSource("com.tangerine.ticketbox.theatre.TheatreTestData#provideDomains")
     void findByDate_NotExistTheatre_Exception(Theatre theatre) {
 
         Exception exception = catchException(() -> repository.findByDate(theatre.closeRun().plusDays(2)));
