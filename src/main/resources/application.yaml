@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ENC(7LAJtEwwi4iSlaUfeCNo9+45BvfAt6BB/tPBx+yIlYus9KgbpIqHjTg78jfamtx5)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ENC(gjzdPOmtRYvBlzWJLSLgjw==)
+    password: ENC(miFR+OdpkC/vRaKSUcwjcpbrEOebJtM5)
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    provider-name: SunJCE
+    pool-size: 2
+    key-obtention-iterations: 1000
+    string-output-type: base64
