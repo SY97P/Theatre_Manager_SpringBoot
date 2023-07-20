@@ -23,9 +23,6 @@ dependencies {
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // dev tools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     // h2 db
     runtimeOnly 'com.h2database:h2'
 

@@ -1,0 +1,28 @@
+package com.tangerine.ticketbox.theatre;
+
+import com.tangerine.ticketbox.theatre.model.*;
+import org.junit.jupiter.params.provider.Arguments;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
+
+public class TheatreTestData {
+
+    public static Theatre newTheatre(Theatre theatre) {
+        return new Theatre(theatre.theatreId(), new TheatreName("새로운 연극"), Genre.PLAY, AgeRate.ALL, LocalDate.of(2023, 4, 12), LocalDate.of(2023, 9, 1), Stage.B1);
+    }
+
+    static List<Theatre> theatres = List.of(
+            new Theatre(UUID.randomUUID(), new TheatreName("밤의 여왕 아리아"), Genre.OPERA, AgeRate.ALL, LocalDate.of(2023, 1, 23), LocalDate.of(2023, 8, 14), Stage.A1),
+            new Theatre(UUID.randomUUID(), new TheatreName("쉬어매드니스"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2022, 6, 1), LocalDate.of(2023, 10, 31), Stage.A2),
+            new Theatre(UUID.randomUUID(), new TheatreName("시라노"), Genre.MUSICAL, AgeRate.ADULT_ONLY, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 1), Stage.B1),
+            new Theatre(UUID.randomUUID(), new TheatreName("라면"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2023, 10, 23), LocalDate.of(2024, 3, 20), Stage.B2)
+    );
+
+    static Stream<Arguments> provideTheatres() {
+        return theatres.stream()
+                .map(Arguments::of);
+    }
+}

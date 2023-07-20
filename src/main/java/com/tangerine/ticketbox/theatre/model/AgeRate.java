@@ -1,4 +1,4 @@
-package com.tangerine.ticketbox.theatre;
+package com.tangerine.ticketbox.theatre.model;
 
 public enum AgeRate {
     ALL(0),
