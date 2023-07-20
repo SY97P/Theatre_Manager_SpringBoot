@@ -1,0 +1,101 @@
+classDiagram
+
+    %% domain Theatre
+    class Theatre {
+        UUID theatreId
+        TheatreName theatreName
+        Genre genre
+        AgeRate ageRate
+        LocalDate openRun
+        LocalDate closeRun
+        Stage stage
+        Actors actors
+    }
+
+    class TheatreName {
+        String theatreNameValue
+    }
+
+    class Genre {
+        <<enumeration>>
+        OPERA
+        PLAY
+        MUSICAL
+    }
+
+    class AgeRate {
+        <<enumeration>>
+        ALL(0)
+        FIFTEEN(15)
+        ADULT_ONLY(19)
+    }
+
+    class Stage {
+        <<enumeration>>
+        A1, A2,
+        B1, B2,
+        R1, R2,
+        SX
+    }
+
+    class Actors {
+        List<Actor> actors
+    }
+    class Actor {
+        String actorName
+        Age actorAge
+        Gender gender
+    }
+    Actors --> Actor
+
+    Theatre --> TheatreName
+    Theatre --> Genre
+    Theatre --> AgeRate
+    Theatre --> Stage
+    Theatre --> Actors
+
+    %% domain Ticket
+    class Ticket {
+        UUID ticketId
+        UUID theatreId
+        Price price
+        Quantity quantity
+        LocalDate reservedDate
+    }
+
+    class Price {
+        long priceValue
+    }
+
+    class Quantity {
+        long quantityValue
+    }
+
+    Ticket --> Price
+    Ticket --> Quantity
+
+    %% domain TicketOrder
+    class TicketOrder {
+        UUID ticketOrderId
+        Email email
+        LocalDate createdAt
+        OrderStatus orderStatus
+    }
+
+    class Email {
+        String emailValue
+    }
+
+    class OrderStatus {
+        <<enumeration>>
+        ACCEPTED
+        PAYMENT_READY
+        RESERVED
+    }
+
+    TicketOrder --> Email
+    TicketOrder --> OrderStatus
+
+    TicketOrder --> Ticket
+
+    Ticket --> Theatre

@@ -1,0 +1,30 @@
+classDiagram
+
+    %% application
+    class TicketBoxApplication
+    TicketBoxApplication --> TicketOrderController
+    TicketBoxApplication --> TheatreController
+
+    %% controller
+    class TicketOrderController
+    TicketOrderController --> TicketOrderService : TicketParam
+
+    class TheatreController
+    TheatreController --> TheatreService : TheatreParam
+
+    class TicketOrderService
+    TicketOrderService --> TicketOrderRepository : TicketOrder
+    TicketOrderService --> TicketRepository : Ticket
+
+    class TheatreService
+    TheatreService --> TheatreRepository : Theatre
+
+    %% persistence
+    class TicketRepository
+    TicketRepository --> tickets
+
+    class TicketOrderRepository
+    TicketOrderRepository --> ticket_orders
+
+    class TheatreRepository
+    TheatreRepository --> theatres
