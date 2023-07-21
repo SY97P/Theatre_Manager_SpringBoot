@@ -178,4 +178,5 @@ class TheatreServiceTest {
 
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class);
     }
+
 }
