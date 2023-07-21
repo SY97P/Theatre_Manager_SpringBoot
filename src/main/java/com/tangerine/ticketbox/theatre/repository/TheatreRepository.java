@@ -1,6 +1,6 @@
 package com.tangerine.ticketbox.theatre.repository;
 
-import com.tangerine.ticketbox.theatre.model.TheatreName;
+import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import com.tangerine.ticketbox.theatre.repository.model.Theatre;
 
 import java.time.LocalDate;

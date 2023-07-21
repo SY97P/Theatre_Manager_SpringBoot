@@ -1,9 +1,9 @@
 package com.tangerine.ticketbox.theatre.repository.model;
 
-import com.tangerine.ticketbox.theatre.model.AgeRate;
-import com.tangerine.ticketbox.theatre.model.Genre;
-import com.tangerine.ticketbox.theatre.model.Stage;
-import com.tangerine.ticketbox.theatre.model.TheatreName;
+import com.tangerine.ticketbox.theatre.vo.AgeRate;
+import com.tangerine.ticketbox.theatre.vo.Genre;
+import com.tangerine.ticketbox.theatre.vo.Stage;
+import com.tangerine.ticketbox.theatre.vo.TheatreName;
 
 import java.time.LocalDate;
 import java.util.UUID;

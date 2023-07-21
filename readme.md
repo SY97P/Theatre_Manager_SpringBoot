@@ -1,8 +1,8 @@
 # 🍿 티켓 예약 관리 시스템 - Ticket Box Manager
 
-## Summary
+## 🛎️ Summary
 
-### Requirements
+### 🧩 Requirements
 > 혜화동에 차린 나의 극장.<br>
 > 시설 투자를 잘 했기 때문일까? <br> 
 > 내 극장에서 공연을 올리고 싶어하는 극단이 많다. <br>
@@ -18,19 +18,19 @@
   - 공연 기간이 아닌 날짜를 선택했을때 알림
   - 최종 구매한 티켓에 대해서 결제
 
-### Flow Chart
+### 🧬 Flow Chart
 
-### Class Diagram
+### 🗂️ Class Diagram
 
-### 사용한 기술
+### 🪢 Domain Relation 
+
+### 🕹️ 사용한 기술
 - Spring Boot
   - REST api
 - Jasypt
 - Mysql Database
 - H2 Database (for Test)
 - mapstruct
-
-### Relation between objects
 
 ## React UI
 ### git hub link

@@ -2,8 +2,8 @@ classDiagram
 
     %% application
     class TicketBoxApplication
-    TicketBoxApplication --> TicketOrderController
-    TicketBoxApplication --> TheatreController
+    TicketBoxApplication --> TicketOrderController : XXXTicketOrderRequest
+    TicketBoxApplication --> TheatreController : XXXTheatreRequest
 
     %% controller
     class TicketOrderController
@@ -21,10 +21,10 @@ classDiagram
 
     %% persistence
     class TicketRepository
-    TicketRepository --> tickets
+    TicketRepository --> tickets : TicketEntity
 
     class TicketOrderRepository
-    TicketOrderRepository --> ticket_orders
+    TicketOrderRepository --> ticket_orders : TicketOrderEntity
 
     class TheatreRepository
     TheatreRepository --> theatres

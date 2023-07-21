@@ -9,7 +9,6 @@ classDiagram
         LocalDate openRun
         LocalDate closeRun
         Stage stage
-        Actors actors
     }
 
     class TheatreName {
@@ -33,26 +32,13 @@ classDiagram
     class Stage {
         <<enumeration>>
         A1, A2,
-        B1, B2,
-        R1, R2,
-        SX
+        B1, B2
     }
-
-    class Actors {
-        List<Actor> actors
-    }
-    class Actor {
-        String actorName
-        Age actorAge
-        Gender gender
-    }
-    Actors --> Actor
 
     Theatre --> TheatreName
     Theatre --> Genre
     Theatre --> AgeRate
     Theatre --> Stage
-    Theatre --> Actors
 
     %% domain Ticket
     class Ticket {
@@ -80,7 +66,8 @@ classDiagram
         UUID ticketOrderId
         Email email
         LocalDate orderedAt
-        OrderStatus orderStatus
+        OrderStatus ticketOrderStatus
+        List< Ticket > tickets
     }
 
     class Email {

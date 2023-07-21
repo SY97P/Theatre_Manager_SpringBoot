@@ -1,22 +1,28 @@
 package com.tangerine.ticketbox.ticket.repository;
 
+import com.tangerine.ticketbox.ticket.repository.dto.TicketEntity;
+import com.tangerine.ticketbox.ticket.service.model.Ticket;
+
 import java.util.List;
 import java.util.UUID;
 
 public interface TicketRepository {
 
-    void insert(Ticket ticket);
+    void insert(TicketEntity ticket);
 
-    void update(Ticket ticket);
+    void update(TicketEntity ticket);
 
     void deleteAll();
 
     void deleteById(UUID ticketId);
 
-    List<Ticket> findAll();
+    void deleteByOrderId(UUID orderId);
 
-    Ticket findById(UUID ticketId);
+    List<TicketEntity> findAll();
 
-    Ticket findByTheatreId(UUID theatreId);
+    TicketEntity findById(UUID ticketId);
 
+    TicketEntity findByTheatreId(UUID theatreId);
+
+    List<TicketEntity> findByOrderId(UUID orderId);
 }

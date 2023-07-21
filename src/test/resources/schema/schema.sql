@@ -1,4 +1,4 @@
-CREATE TABLE theatres
+CREATE TABLE IF NOT EXISTS theatres
 (
     theatre_id   VARCHAR(50) NOT NULL,
     theatre_name VARCHAR(50) NOT NULL,
@@ -11,19 +11,7 @@ CREATE TABLE theatres
     PRIMARY KEY (theatre_id)
 );
 
-CREATE TABLE tickets
-(
-    ticket_id       VARCHAR(50) NOT NULL,
-    theatre_id      VARCHAR(50) NOT NULL,
-    ticket_price    LONG        NOT NULL,
-    ticket_quantity LONG        NOT NULL,
-    reserved_date   DATE        NOT NULL,
-
-    PRIMARY KEY (ticket_id),
-    FOREIGN KEY (theatre_id) REFERENCES theatres (theatre_id)
-);
-
-CREATE TABLE orders
+CREATE TABLE IF NOT EXISTS ticket_orders
 (
     order_id     VARCHAR(50) NOT NULL,
     email        VARCHAR(50) NOT NULL,
@@ -31,4 +19,18 @@ CREATE TABLE orders
     order_status VARCHAR(20) NOT NULL,
 
     PRIMARY KEY (order_id)
+);
+
+CREATE TABLE IF NOT EXISTS tickets
+(
+    ticket_id       VARCHAR(50) NOT NULL,
+    order_id        VARCHAR(50) NOT NULL,
+    theatre_id      VARCHAR(50) NOT NULL,
+    ticket_price    LONG        NOT NULL,
+    ticket_quantity LONG        NOT NULL,
+    reserved_date   DATE        NOT NULL,
+
+    PRIMARY KEY (ticket_id),
+    FOREIGN KEY (theatre_id) REFERENCES theatres (theatre_id),
+    FOREIGN KEY (order_id) REFERENCES ticket_orders (order_id)
 );
