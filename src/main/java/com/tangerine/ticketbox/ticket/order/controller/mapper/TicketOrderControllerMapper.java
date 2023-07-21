@@ -17,10 +17,13 @@ public interface TicketOrderControllerMapper {
     @Mapping(target = "orderId", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(target = "orderedAt", expression = "java(java.time.LocalDate.now())")
     @Mapping(target = "ticketOrderStatus", expression = "java(TicketOrderStatus.ACCEPTED)")
+    @Mapping(target = "tickets", ignore = true)
     TicketOrderParam requestToParam(CreateTicketOrderRequest request);
 
+    @Mapping(target = "tickets", ignore = true)
     TicketOrderParam requestToParam(UpdateTicketOrderRequest request);
 
+    @Mapping(target = "tickets", ignore = true)
     TicketOrderResponse resultToResponse(TicketOrderResult result);
 
 }

@@ -1,18 +1,18 @@
 package com.tangerine.ticketbox.ticket;
 
+import com.tangerine.ticketbox.theatre.repository.model.Theatre;
 import com.tangerine.ticketbox.theatre.vo.AgeRate;
 import com.tangerine.ticketbox.theatre.vo.Genre;
 import com.tangerine.ticketbox.theatre.vo.Stage;
 import com.tangerine.ticketbox.theatre.vo.TheatreName;
-import com.tangerine.ticketbox.theatre.repository.model.Theatre;
 import com.tangerine.ticketbox.ticket.order.repository.model.TicketOrderEntity;
 import com.tangerine.ticketbox.ticket.order.vo.Email;
 import com.tangerine.ticketbox.ticket.order.vo.TicketOrderStatus;
 import com.tangerine.ticketbox.ticket.repository.dto.TicketEntity;
 import com.tangerine.ticketbox.ticket.service.mapper.TicketServiceMapper;
+import com.tangerine.ticketbox.ticket.service.model.Ticket;
 import com.tangerine.ticketbox.ticket.vo.Price;
 import com.tangerine.ticketbox.ticket.vo.Quantity;
-import com.tangerine.ticketbox.ticket.service.model.Ticket;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;

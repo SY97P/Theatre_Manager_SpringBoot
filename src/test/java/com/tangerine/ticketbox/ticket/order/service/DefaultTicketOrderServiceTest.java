@@ -47,8 +47,8 @@ class DefaultTicketOrderServiceTest {
 
         service.createOrder(order);
 
-        TicketOrderResult result = service.findOrderById(order.orderId());
-        assertThat(result.orderId()).isEqualTo(order.orderId());
+        TicketOrderResult result = service.findOrderById(order.getOrderId());
+        assertThat(result.orderId()).isEqualTo(order.getOrderId());
     }
 
     @ParameterizedTest
@@ -71,8 +71,8 @@ class DefaultTicketOrderServiceTest {
         TicketOrderParam newParam = TicketOrderTestData.newParams(order);
         service.updateOrder(newParam);
 
-        TicketOrderResult result = service.findOrderById(order.orderId());
-        assertThat(result.orderId()).isEqualTo(newParam.orderId());
+        TicketOrderResult result = service.findOrderById(order.getOrderId());
+        assertThat(result.orderId()).isEqualTo(newParam.getOrderId());
     }
 
     @ParameterizedTest
@@ -101,9 +101,9 @@ class DefaultTicketOrderServiceTest {
     void deleteById_ExistTheatreId_DeleteTheatre(TicketOrderParam order) {
         service.createOrder(order);
 
-        service.deleteOrderById(order.orderId());
+        service.deleteOrderById(order.getOrderId());
 
-        Exception exception = catchException(() -> service.findOrderById(order.orderId()));
+        Exception exception = catchException(() -> service.findOrderById(order.getOrderId()));
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class);
     }
 
@@ -112,9 +112,9 @@ class DefaultTicketOrderServiceTest {
     @MethodSource("com.tangerine.ticketbox.ticket.order.TicketOrderTestData#provideParams")
     void deleteById_NotExistTheatreId_Exception(TicketOrderParam order) {
 
-        service.deleteOrderById(order.orderId());
+        service.deleteOrderById(order.getOrderId());
 
-        Exception exception = catchException(() -> service.findOrderById(order.orderId()));
+        Exception exception = catchException(() -> service.findOrderById(order.getOrderId()));
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class);
     }
 
@@ -135,9 +135,9 @@ class DefaultTicketOrderServiceTest {
     void findById_ExistTheatre_ReturnTheatre(TicketOrderParam order) {
         service.createOrder(order);
 
-        TicketOrderResult result = service.findOrderById(order.orderId());
+        TicketOrderResult result = service.findOrderById(order.getOrderId());
 
-        assertThat(result.orderId()).isEqualTo(order.orderId());
+        assertThat(result.orderId()).isEqualTo(order.getOrderId());
     }
 
     @ParameterizedTest
@@ -145,7 +145,7 @@ class DefaultTicketOrderServiceTest {
     @MethodSource("com.tangerine.ticketbox.ticket.order.TicketOrderTestData#provideParams")
     void findById_NotExistTheatre_ReturnNull(TicketOrderParam order) {
 
-        Exception exception = catchException(() -> service.findOrderById(order.orderId()));
+        Exception exception = catchException(() -> service.findOrderById(order.getOrderId()));
 
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class);
     }
@@ -156,9 +156,9 @@ class DefaultTicketOrderServiceTest {
     void findByEmail_ExistTheatre_ReturnTheatre(TicketOrderParam order) {
         service.createOrder(order);
 
-        TicketOrderResult result = service.findOrderByEmail(order.email());
+        TicketOrderResult result = service.findOrderByEmail(order.getEmail());
 
-        assertThat(result.orderId()).isEqualTo(order.orderId());
+        assertThat(result.orderId()).isEqualTo(order.getOrderId());
     }
 
     @ParameterizedTest
@@ -166,7 +166,7 @@ class DefaultTicketOrderServiceTest {
     @MethodSource("com.tangerine.ticketbox.ticket.order.TicketOrderTestData#provideParams")
     void findByEmail_NotExistTheatre_ReturnNull(TicketOrderParam order) {
 
-        Exception exception = catchException(() -> service.findOrderByEmail(order.email()));
+        Exception exception = catchException(() -> service.findOrderByEmail(order.getEmail()));
 
         assertThat(exception).isInstanceOf(EmptyResultDataAccessException.class);
     }

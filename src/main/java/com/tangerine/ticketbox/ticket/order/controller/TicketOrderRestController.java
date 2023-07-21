@@ -1,11 +1,15 @@
 package com.tangerine.ticketbox.ticket.order.controller;
 
+import com.tangerine.ticketbox.ticket.controller.mapper.TicketControllerMapper;
 import com.tangerine.ticketbox.ticket.order.controller.dto.CreateTicketOrderRequest;
 import com.tangerine.ticketbox.ticket.order.controller.dto.TicketOrderResponse;
 import com.tangerine.ticketbox.ticket.order.controller.dto.UpdateTicketOrderRequest;
 import com.tangerine.ticketbox.ticket.order.controller.mapper.TicketOrderControllerMapper;
-import com.tangerine.ticketbox.ticket.order.vo.Email;
 import com.tangerine.ticketbox.ticket.order.service.TicketOrderService;
+import com.tangerine.ticketbox.ticket.order.service.dto.TicketOrderParam;
+import com.tangerine.ticketbox.ticket.order.service.dto.TicketOrderResult;
+import com.tangerine.ticketbox.ticket.order.vo.Email;
+import com.tangerine.ticketbox.ticket.service.model.Ticket;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +28,23 @@ public class TicketOrderRestController {
 
     @PostMapping("/create")
     public void createOrder(@RequestBody CreateTicketOrderRequest request) {
-        service.createOrder(TicketOrderControllerMapper.INSTANCE.requestToParam(request));
+        TicketOrderParam ticketOrderParam = TicketOrderControllerMapper.INSTANCE.requestToParam(request);
+        List<Ticket> tickets = request.tickets().stream()
+                .map(TicketControllerMapper.INSTANCE::requestToDomain)
+                .toList();
+        tickets.forEach(ticket -> ticket.setOrderId(ticketOrderParam.getOrderId()));
+        ticketOrderParam.setTickets(tickets);
+        service.createOrder(ticketOrderParam);
     }
 
     @PostMapping("/update")
     public void updateOrder(@RequestBody UpdateTicketOrderRequest request) {
-        service.updateOrder(TicketOrderControllerMapper.INSTANCE.requestToParam(request));
+        List<Ticket> tickets = request.tickets().stream()
+                .map(TicketControllerMapper.INSTANCE::requestToDomain)
+                .toList();
+        TicketOrderParam ticketOrderParam = TicketOrderControllerMapper.INSTANCE.requestToParam(request);
+        ticketOrderParam.setTickets(tickets);
+        service.updateOrder(ticketOrderParam);
     }
 
     @DeleteMapping("/delete/all")
@@ -44,22 +59,40 @@ public class TicketOrderRestController {
 
     @GetMapping("")
     public ResponseEntity<List<TicketOrderResponse>> orderList() {
-        return ResponseEntity.ok(
-                service.findAllOrders()
-                        .stream()
-                        .map(TicketOrderControllerMapper.INSTANCE::resultToResponse)
-                        .toList()
-        );
+        List<TicketOrderResult> ticketOrderResults = service.findAllOrders();
+        List<TicketOrderResponse> ticketOrderResponses = ticketOrderResults.stream()
+                .map(TicketOrderControllerMapper.INSTANCE::resultToResponse)
+                .toList();
+        for (int i = 0; i < ticketOrderResponses.size(); i++) {
+            ticketOrderResponses.get(i).setTickets(
+                    ticketOrderResults.get(i).tickets().stream()
+                            .map(TicketControllerMapper.INSTANCE::domainToResponse)
+                            .toList()
+            );
+        }
+        return ResponseEntity.ok(ticketOrderResponses);
     }
 
     @GetMapping("/id/{orderId}")
     public ResponseEntity<TicketOrderResponse> orderById(@PathVariable UUID orderId) {
-        return ResponseEntity.ok(TicketOrderControllerMapper.INSTANCE.resultToResponse(service.findOrderById(orderId)));
+        TicketOrderResult ticketOrderResult = service.findOrderById(orderId);
+        TicketOrderResponse ticketOrderResponse = TicketOrderControllerMapper.INSTANCE.resultToResponse(ticketOrderResult);
+        ticketOrderResponse.setTickets(
+                ticketOrderResult.tickets().stream()
+                        .map(TicketControllerMapper.INSTANCE::domainToResponse)
+                        .toList());
+        return ResponseEntity.ok(ticketOrderResponse);
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<TicketOrderResponse> orderByEmail(@PathVariable Email email) {
-        return ResponseEntity.ok(TicketOrderControllerMapper.INSTANCE.resultToResponse(service.findOrderByEmail(email)));
+        TicketOrderResult ticketOrderResult = service.findOrderByEmail(email);
+        TicketOrderResponse ticketOrderResponse = TicketOrderControllerMapper.INSTANCE.resultToResponse(ticketOrderResult);
+        ticketOrderResponse.setTickets(
+                ticketOrderResult.tickets().stream()
+                        .map(TicketControllerMapper.INSTANCE::domainToResponse)
+                        .toList());
+        return ResponseEntity.ok(ticketOrderResponse);
     }
 
 }

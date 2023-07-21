@@ -4,8 +4,8 @@ import com.tangerine.ticketbox.theatre.controller.dto.CreateTheatreRequest;
 import com.tangerine.ticketbox.theatre.controller.dto.TheatreResponse;
 import com.tangerine.ticketbox.theatre.controller.dto.UpdateTheatreRequest;
 import com.tangerine.ticketbox.theatre.controller.mapper.TheatreControllerMapper;
-import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import com.tangerine.ticketbox.theatre.service.TheatreService;
+import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

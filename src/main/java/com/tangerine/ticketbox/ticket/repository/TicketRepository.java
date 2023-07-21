@@ -1,7 +1,6 @@
 package com.tangerine.ticketbox.ticket.repository;
 
 import com.tangerine.ticketbox.ticket.repository.dto.TicketEntity;
-import com.tangerine.ticketbox.ticket.service.model.Ticket;
 
 import java.util.List;
 import java.util.UUID;

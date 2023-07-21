@@ -79,7 +79,7 @@ public class TicketOrderTestData {
     }
 
     public static TicketOrderParam newParams(TicketOrderParam param) {
-        return new TicketOrderParam(param.orderId(), new Email("new-order@naver.com"), LocalDate.now(), TicketOrderStatus.ACCEPTED, param.tickets());
+        return new TicketOrderParam(param.getOrderId(), new Email("new-order@naver.com"), LocalDate.now(), TicketOrderStatus.ACCEPTED, param.getTickets());
     }
 
     public static TicketOrder newDomain(TicketOrder domain) {

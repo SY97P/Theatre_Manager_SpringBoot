@@ -25,7 +25,7 @@ class JdbcTicketOrderRepositoryTest {
 
     @Autowired
     JdbcTicketOrderRepository repository;
-    
+
     @ParameterizedTest
     @DisplayName("존재하지 않는 주문 추가 시 성공한다.")
     @MethodSource("com.tangerine.ticketbox.ticket.order.TicketOrderTestData#provideEntities")
@@ -107,6 +107,7 @@ class JdbcTicketOrderRepositoryTest {
     @DisplayName("모든 주문을 조회한다.")
     @MethodSource("com.tangerine.ticketbox.ticket.order.TicketOrderTestData#provideEntities")
     void findAll_Void_ReturnOrderEntityList(TicketOrderEntity order) {
+        System.out.println(order);
         repository.insert(order);
 
         List<TicketOrderEntity> result = repository.findAll();

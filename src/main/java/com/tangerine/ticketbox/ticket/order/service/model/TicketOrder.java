@@ -1,8 +1,8 @@
 package com.tangerine.ticketbox.ticket.order.service.model;
 
+import com.tangerine.ticketbox.ticket.order.vo.Email;
 import com.tangerine.ticketbox.ticket.order.vo.TicketOrderStatus;
 import com.tangerine.ticketbox.ticket.service.model.Ticket;
-import com.tangerine.ticketbox.ticket.order.vo.Email;
 
 import java.time.LocalDate;
 import java.util.List;

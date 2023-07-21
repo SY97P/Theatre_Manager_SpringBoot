@@ -1,10 +1,10 @@
 package com.tangerine.ticketbox.theatre.service;
 
-import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import com.tangerine.ticketbox.theatre.repository.TheatreRepository;
 import com.tangerine.ticketbox.theatre.service.dto.TheatreParam;
 import com.tangerine.ticketbox.theatre.service.dto.TheatreResult;
 import com.tangerine.ticketbox.theatre.service.mapper.TheatreServiceMapper;
+import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

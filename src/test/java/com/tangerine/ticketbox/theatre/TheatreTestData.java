@@ -1,9 +1,12 @@
 package com.tangerine.ticketbox.theatre;
 
-import com.tangerine.ticketbox.theatre.vo.*;
 import com.tangerine.ticketbox.theatre.repository.model.Theatre;
 import com.tangerine.ticketbox.theatre.service.dto.TheatreParam;
 import com.tangerine.ticketbox.theatre.service.mapper.TheatreServiceMapper;
+import com.tangerine.ticketbox.theatre.vo.AgeRate;
+import com.tangerine.ticketbox.theatre.vo.Genre;
+import com.tangerine.ticketbox.theatre.vo.Stage;
+import com.tangerine.ticketbox.theatre.vo.TheatreName;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;

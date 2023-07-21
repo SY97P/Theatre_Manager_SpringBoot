@@ -1,8 +1,8 @@
 package com.tangerine.ticketbox.ticket.order.service;
 
 import com.tangerine.ticketbox.ticket.order.service.dto.TicketOrderParam;
-import com.tangerine.ticketbox.ticket.order.vo.Email;
 import com.tangerine.ticketbox.ticket.order.service.dto.TicketOrderResult;
+import com.tangerine.ticketbox.ticket.order.vo.Email;
 
 import java.util.List;
 import java.util.UUID;

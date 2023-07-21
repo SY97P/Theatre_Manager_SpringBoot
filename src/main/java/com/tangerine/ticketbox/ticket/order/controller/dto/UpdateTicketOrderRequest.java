@@ -1,8 +1,8 @@
 package com.tangerine.ticketbox.ticket.order.controller.dto;
 
+import com.tangerine.ticketbox.ticket.controller.dto.UpdateTicketRequest;
 import com.tangerine.ticketbox.ticket.order.vo.Email;
 import com.tangerine.ticketbox.ticket.order.vo.TicketOrderStatus;
-import com.tangerine.ticketbox.ticket.service.model.Ticket;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +13,6 @@ public record UpdateTicketOrderRequest(
         Email email,
         LocalDate orderedAt,
         TicketOrderStatus ticketOrderStatus,
-        List<Ticket> tickets
+        List<UpdateTicketRequest> tickets
 ) {
 }
