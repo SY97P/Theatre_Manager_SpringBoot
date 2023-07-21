@@ -3,6 +3,8 @@ package com.tangerine.ticketbox.theatre.service;
 import com.tangerine.ticketbox.global.exception.SqlException;
 import com.tangerine.ticketbox.theatre.TheatreTestData;
 import com.tangerine.ticketbox.theatre.repository.JdbcTheatreRepository;
+import com.tangerine.ticketbox.theatre.service.dto.TheatreParam;
+import com.tangerine.ticketbox.theatre.service.dto.TheatreResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

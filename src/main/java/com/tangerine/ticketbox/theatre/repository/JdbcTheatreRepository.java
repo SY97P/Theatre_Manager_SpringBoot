@@ -2,6 +2,7 @@ package com.tangerine.ticketbox.theatre.repository;
 
 import com.tangerine.ticketbox.global.exception.SqlException;
 import com.tangerine.ticketbox.theatre.model.*;
+import com.tangerine.ticketbox.theatre.repository.model.Theatre;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

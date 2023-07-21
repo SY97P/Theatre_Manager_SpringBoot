@@ -1,8 +1,9 @@
 package com.tangerine.ticketbox.theatre;
 
 import com.tangerine.ticketbox.theatre.model.*;
-import com.tangerine.ticketbox.theatre.service.TheatreParam;
-import com.tangerine.ticketbox.theatre.service.TheatreServiceMapper;
+import com.tangerine.ticketbox.theatre.repository.model.Theatre;
+import com.tangerine.ticketbox.theatre.service.dto.TheatreParam;
+import com.tangerine.ticketbox.theatre.service.mapper.TheatreServiceMapper;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;

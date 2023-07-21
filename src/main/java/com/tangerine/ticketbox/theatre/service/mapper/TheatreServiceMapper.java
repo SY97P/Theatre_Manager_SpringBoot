@@ -1,6 +1,8 @@
-package com.tangerine.ticketbox.theatre.service;
+package com.tangerine.ticketbox.theatre.service.mapper;
 
-import com.tangerine.ticketbox.theatre.model.Theatre;
+import com.tangerine.ticketbox.theatre.repository.model.Theatre;
+import com.tangerine.ticketbox.theatre.service.dto.TheatreParam;
+import com.tangerine.ticketbox.theatre.service.dto.TheatreResult;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

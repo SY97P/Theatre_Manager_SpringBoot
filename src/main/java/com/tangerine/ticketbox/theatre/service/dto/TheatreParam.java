@@ -1,4 +1,4 @@
-package com.tangerine.ticketbox.theatre.service;
+package com.tangerine.ticketbox.theatre.service.dto;
 
 import com.tangerine.ticketbox.theatre.model.AgeRate;
 import com.tangerine.ticketbox.theatre.model.Genre;
