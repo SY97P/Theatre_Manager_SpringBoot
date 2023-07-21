@@ -62,6 +62,7 @@ public class TheatreRestController {
         return ResponseEntity.ok(TheatreControllerMapper.INSTANCE.resultToResponse(service.findTheatreByName(theatreName)));
     }
 
+    // todo -> 500 internet server error
     @GetMapping("/date/{date}")
     public ResponseEntity<TheatreResponse> theatreByDate(@PathVariable LocalDate date) {
         return ResponseEntity.ok(TheatreControllerMapper.INSTANCE.resultToResponse(service.findTheatreByDate(date)));

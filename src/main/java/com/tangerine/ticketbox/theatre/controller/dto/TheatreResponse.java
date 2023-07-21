@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public record TheatreResponse(
         UUID theatreId,
-        TheatreName theatreName,
+        String theatreName,
         Genre genre,
         AgeRate ageRate,
         LocalDate openRun,

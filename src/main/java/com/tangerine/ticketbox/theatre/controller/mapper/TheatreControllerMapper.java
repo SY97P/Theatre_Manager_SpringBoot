@@ -21,6 +21,7 @@ public interface TheatreControllerMapper {
     @Mapping(source = "theatreName", target = "theatreName.theatreNameValue")
     TheatreParam requestToParam(UpdateTheatreRequest request);
 
+    @Mapping(source = "theatreName.theatreNameValue", target = "theatreName")
     TheatreResponse resultToResponse(TheatreResult result);
 
 }
