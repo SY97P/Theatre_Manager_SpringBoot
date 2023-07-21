@@ -57,10 +57,11 @@ classDiagram
     %% domain Ticket
     class Ticket {
         UUID ticketId
+        UUID orderId
         UUID theatreId
         Price price
         Quantity quantity
-        LocalDate reservedDate
+        LocalDate reservedAt
     }
 
     class Price {
@@ -78,7 +79,7 @@ classDiagram
     class TicketOrder {
         UUID ticketOrderId
         Email email
-        LocalDate createdAt
+        LocalDate orderedAt
         OrderStatus orderStatus
     }
 

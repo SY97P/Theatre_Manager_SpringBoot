@@ -1,4 +1,4 @@
-package com.tangerine.ticketbox.order;
+package com.tangerine.ticketbox.order.model;
 
 public enum OrderStatus {
     ACCEPTED,
