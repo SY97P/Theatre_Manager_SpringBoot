@@ -11,6 +11,14 @@ CREATE TABLE theatres
     PRIMARY KEY (theatre_id)
 );
 
+CREATE TABLE tickets
+(
+    ticket_id VARCHAR(50) NOT NULL ,
+    theatre_id VARCHAR(50) NOT NULL ,
+    ticket_price LONG NOT NULL ,
+    ticket_quantity LONG NOT NULL ,
+    reserved_date DATE NOT NULL ,
 
-    primary key (theatre_id)
+    PRIMARY KEY (ticket_id),
+    FOREIGN KEY (theatre_id) REFERENCES theatres (theatre_id)
 );
