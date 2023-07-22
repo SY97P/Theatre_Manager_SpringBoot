@@ -1,9 +1,9 @@
 classDiagram
 
-    %% domain Theatre
-    class Theatre {
-        UUID theatreId
-        TheatreName theatreName
+    %% domain Performance
+    class Performance {
+        UUID performanceId
+        PerformanceName performanceName
         Genre genre
         AgeRate ageRate
         LocalDate openRun
@@ -11,8 +11,8 @@ classDiagram
         Stage stage
     }
 
-    class TheatreName {
-        String theatreNameValue
+    class PerformanceName {
+        String performanceNameValue
     }
 
     class Genre {
@@ -35,16 +35,16 @@ classDiagram
         B1, B2
     }
 
-    Theatre --> TheatreName
-    Theatre --> Genre
-    Theatre --> AgeRate
-    Theatre --> Stage
+    Performance --> PerformanceName
+    Performance --> Genre
+    Performance --> AgeRate
+    Performance --> Stage
 
     %% domain Ticket
     class Ticket {
         UUID ticketId
         UUID orderId
-        UUID theatreId
+        UUID performanceId
         Price price
         Quantity quantity
         LocalDate reservedAt
@@ -86,4 +86,4 @@ classDiagram
 
     TicketOrder --> Ticket
 
-    Ticket --> Theatre
+    Ticket --> Performance

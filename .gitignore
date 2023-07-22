@@ -12,7 +12,7 @@ gradle/
 gradlew
 gradlew.bat
 src/main/resources/jasypt-encryptor-password.txt
-src/test/java/com/tangerine/ticketbox/global/config/JasyptConfigurationTest.java
+src/test/java/com/tangerine/theatre_manager/global/config/JasyptConfigurationTest.java
 
 ### STS ###
 .apt_generated

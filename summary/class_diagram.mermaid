@@ -3,21 +3,21 @@ classDiagram
     %% application
     class TicketBoxApplication
     TicketBoxApplication --> TicketOrderController : XXXTicketOrderRequest
-    TicketBoxApplication --> TheatreController : XXXTheatreRequest
+    TicketBoxApplication --> PerformanceController : XXXPerformanceRequest
 
     %% controller
     class TicketOrderController
     TicketOrderController --> TicketOrderService : TicketParam
 
-    class TheatreController
-    TheatreController --> TheatreService : TheatreParam
+    class PerformanceController
+    PerformanceController --> PerformanceService : PerformanceParam
 
     class TicketOrderService
     TicketOrderService --> TicketOrderRepository : TicketOrder
     TicketOrderService --> TicketRepository : Ticket
 
-    class TheatreService
-    TheatreService --> TheatreRepository : Theatre
+    class PerformanceService
+    PerformanceService --> PerformanceRepository : Performance
 
     %% persistence
     class TicketRepository
@@ -26,5 +26,5 @@ classDiagram
     class TicketOrderRepository
     TicketOrderRepository --> ticket_orders : TicketOrderEntity
 
-    class TheatreRepository
-    TheatreRepository --> theatres
+    class PerformanceRepository
+    PerformanceRepository --> performances
