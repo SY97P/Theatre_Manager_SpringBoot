@@ -1,7 +1,5 @@
 package com.tangerine.theatre_manager.performance.controller.dto;
 
-import com.tangerine.theatre_manager.performance.vo.Price;
-
 import java.time.LocalDate;
 import java.util.UUID;
 

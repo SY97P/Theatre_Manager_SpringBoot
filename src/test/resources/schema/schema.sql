@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS ticket_orders
 
 CREATE TABLE IF NOT EXISTS tickets
 (
-    ticket_id       VARCHAR(50) NOT NULL,
-    order_id        VARCHAR(50) NOT NULL,
-    performance_id  VARCHAR(50) NOT NULL,
-    ticket_price    LONG        NOT NULL,
-    reserved_date   DATE        NOT NULL,
+    ticket_id      VARCHAR(50) NOT NULL,
+    order_id       VARCHAR(50) NOT NULL,
+    performance_id VARCHAR(50) NOT NULL,
+    ticket_price   LONG        NOT NULL,
+    reserved_date  DATE        NOT NULL,
 
     PRIMARY KEY (ticket_id),
     FOREIGN KEY (performance_id) REFERENCES performances (performance_id) on update cascade on delete cascade,

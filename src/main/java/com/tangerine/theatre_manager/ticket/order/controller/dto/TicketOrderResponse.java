@@ -1,12 +1,10 @@
 package com.tangerine.theatre_manager.ticket.order.controller.dto;
 
 import com.tangerine.theatre_manager.ticket.controller.dto.TicketResponse;
-import com.tangerine.theatre_manager.ticket.order.vo.Email;
 import com.tangerine.theatre_manager.ticket.order.vo.TicketOrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public final class TicketOrderResponse {

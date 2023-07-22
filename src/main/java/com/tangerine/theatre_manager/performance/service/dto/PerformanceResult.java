@@ -1,7 +1,6 @@
 package com.tangerine.theatre_manager.performance.service.dto;
 
 import com.tangerine.theatre_manager.performance.vo.*;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.UUID;

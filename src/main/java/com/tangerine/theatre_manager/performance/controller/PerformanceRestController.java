@@ -62,9 +62,9 @@ public class PerformanceRestController {
         return ResponseEntity.ok(PerformanceControllerMapper.INSTANCE.resultToResponse(service.findPerformanceByName(performanceName)));
     }
 
-    // todo -> 500 internet server error
     @GetMapping("/date/{date}")
     public ResponseEntity<PerformanceResponse> performanceByDate(@PathVariable LocalDate date) {
         return ResponseEntity.ok(PerformanceControllerMapper.INSTANCE.resultToResponse(service.findPerformanceByDate(date)));
     }
+
 }

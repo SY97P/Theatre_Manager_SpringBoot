@@ -188,4 +188,7 @@
 ### git hub link
 [Theatre_Manager_React](https://github.com/SY97P/Theatre_Manager_React.git)
 
-### Access URL
+![reservation_mode.png](..%2F..%2FReactProjects%2Ftheatre_manager_react%2Fsummary%2Freservation_mode.png)
+![theatre_mode.png](..%2F..%2FReactProjects%2Ftheatre_manager_react%2Fsummary%2Ftheatre_mode.png)
+![ticket_box_mode.png](..%2F..%2FReactProjects%2Ftheatre_manager_react%2Fsummary%2Fticket_box_mode.png)
+![db.png](summary%2Fdb.png)

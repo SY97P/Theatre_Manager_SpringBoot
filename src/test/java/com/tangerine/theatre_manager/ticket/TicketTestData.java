@@ -1,17 +1,13 @@
 package com.tangerine.theatre_manager.ticket;
 
 import com.tangerine.theatre_manager.performance.repository.model.Performance;
-import com.tangerine.theatre_manager.performance.vo.AgeRate;
-import com.tangerine.theatre_manager.performance.vo.Genre;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
-import com.tangerine.theatre_manager.performance.vo.Stage;
+import com.tangerine.theatre_manager.performance.vo.*;
 import com.tangerine.theatre_manager.ticket.order.repository.model.TicketOrderEntity;
 import com.tangerine.theatre_manager.ticket.order.vo.Email;
 import com.tangerine.theatre_manager.ticket.order.vo.TicketOrderStatus;
 import com.tangerine.theatre_manager.ticket.repository.dto.TicketEntity;
 import com.tangerine.theatre_manager.ticket.service.mapper.TicketServiceMapper;
 import com.tangerine.theatre_manager.ticket.service.model.Ticket;
-import com.tangerine.theatre_manager.performance.vo.Price;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;
@@ -38,7 +34,7 @@ public class TicketTestData {
     public static List<TicketEntity> ticketEntities = List.of(
             new TicketEntity(UUID.randomUUID(), orderEntities.get(0).orderId(), PERFORMANCE_DOMAINS.get(0).performanceId(), new Price(1000), LocalDate.now()),
             new TicketEntity(UUID.randomUUID(), orderEntities.get(1).orderId(), PERFORMANCE_DOMAINS.get(1).performanceId(), new Price(28000), LocalDate.now()),
-            new TicketEntity(UUID.randomUUID(), orderEntities.get(2).orderId(), PERFORMANCE_DOMAINS.get(2).performanceId(), new Price(3000),  LocalDate.now()),
+            new TicketEntity(UUID.randomUUID(), orderEntities.get(2).orderId(), PERFORMANCE_DOMAINS.get(2).performanceId(), new Price(3000), LocalDate.now()),
             new TicketEntity(UUID.randomUUID(), orderEntities.get(3).orderId(), PERFORMANCE_DOMAINS.get(3).performanceId(), new Price(55000), LocalDate.now())
     );
 
