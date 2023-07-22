@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.ticket.vo;
+package com.tangerine.theatre_manager.performance.vo;
 
 import com.tangerine.theatre_manager.global.exception.InvalidDataException;
 

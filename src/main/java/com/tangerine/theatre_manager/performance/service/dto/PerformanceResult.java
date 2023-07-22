@@ -1,9 +1,7 @@
 package com.tangerine.theatre_manager.performance.service.dto;
 
-import com.tangerine.theatre_manager.performance.vo.AgeRate;
-import com.tangerine.theatre_manager.performance.vo.Genre;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
-import com.tangerine.theatre_manager.performance.vo.Stage;
+import com.tangerine.theatre_manager.performance.vo.*;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,6 +13,7 @@ public record PerformanceResult(
         AgeRate ageRate,
         LocalDate openRun,
         LocalDate closeRun,
-        Stage stage
+        Stage stage,
+        Price price
 ) {
 }

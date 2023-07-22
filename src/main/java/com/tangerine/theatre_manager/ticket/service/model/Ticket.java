@@ -1,7 +1,6 @@
 package com.tangerine.theatre_manager.ticket.service.model;
 
-import com.tangerine.theatre_manager.ticket.vo.Price;
-import com.tangerine.theatre_manager.ticket.vo.Quantity;
+import com.tangerine.theatre_manager.performance.vo.Price;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,15 +11,13 @@ public class Ticket {
     private UUID orderId;
     private UUID performanceId;
     private Price ticketPrice;
-    private Quantity ticketQuantity;
     private LocalDate reservedDate;
 
-    public Ticket(UUID ticketId, UUID orderId, UUID performanceId, Price ticketPrice, Quantity ticketQuantity, LocalDate reservedDate) {
+    public Ticket(UUID ticketId, UUID orderId, UUID performanceId, Price ticketPrice, LocalDate reservedDate) {
         this.ticketId = ticketId;
         this.orderId = orderId;
         this.performanceId = performanceId;
         this.ticketPrice = ticketPrice;
-        this.ticketQuantity = ticketQuantity;
         this.reservedDate = reservedDate;
     }
 
@@ -54,14 +51,6 @@ public class Ticket {
 
     public void setTicketPrice(Price ticketPrice) {
         this.ticketPrice = ticketPrice;
-    }
-
-    public Quantity getTicketQuantity() {
-        return ticketQuantity;
-    }
-
-    public void setTicketQuantity(Quantity ticketQuantity) {
-        this.ticketQuantity = ticketQuantity;
     }
 
     public LocalDate getReservedDate() {

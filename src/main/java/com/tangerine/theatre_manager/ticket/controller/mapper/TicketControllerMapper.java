@@ -16,15 +16,12 @@ public interface TicketControllerMapper {
     @Mapping(target = "orderId", ignore = true)
     @Mapping(target = "ticketId", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(source = "ticketPrice", target = "ticketPrice.priceValue")
-    @Mapping(source = "ticketQuantity", target = "ticketQuantity.quantityValue")
     Ticket requestToDomain(CreateTicketRequest request);
 
     @Mapping(source = "ticketPrice", target = "ticketPrice.priceValue")
-    @Mapping(source = "ticketQuantity", target = "ticketQuantity.quantityValue")
     Ticket requestToDomain(UpdateTicketRequest request);
 
     @Mapping(source = "ticketPrice.priceValue", target = "ticketPrice")
-    @Mapping(source = "ticketQuantity.quantityValue", target = "ticketQuantity")
     TicketResponse domainToResponse(Ticket domain);
 
 }

@@ -1,4 +1,4 @@
-# 🍿 티켓 예약 관리 시스템 - Ticket Box Manager
+# 🍿 극장 관리 시스템 - Theatre Manager
 
 ## 🛎️ Summary
 
@@ -186,5 +186,6 @@
 
 ## 🖥️ React UI
 ### git hub link
+[Theatre_Manager_React](https://github.com/SY97P/Theatre_Manager_React.git)
 
 ### Access URL

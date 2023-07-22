@@ -47,12 +47,12 @@ public class TicketOrderRestController {
         service.updateOrder(ticketOrderParam);
     }
 
-    @DeleteMapping("/delete/all")
+    @PostMapping("/delete/all")
     public void deleteAllOrder() {
         service.deleteAllOrders();
     }
 
-    @DeleteMapping("/delete/{orderId}")
+    @PostMapping("/delete/{orderId}")
     public void deleteOrderById(@PathVariable UUID orderId) {
         service.deleteOrderById(orderId);
     }

@@ -8,6 +8,5 @@ public record UpdateTicketRequest(
         UUID orderId,
         UUID performanceId,
         long ticketPrice,
-        long ticketQuantity,
         LocalDate reservedDate) {
 }

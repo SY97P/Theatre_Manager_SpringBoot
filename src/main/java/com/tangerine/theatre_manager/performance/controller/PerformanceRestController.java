@@ -33,12 +33,12 @@ public class PerformanceRestController {
         service.updatePerformance(PerformanceControllerMapper.INSTANCE.requestToParam(request));
     }
 
-    @DeleteMapping("/unregister/all")
+    @PostMapping("/unregister/all")
     public void unregisterPerformances() {
         service.deleteAllPerformance();
     }
 
-    @DeleteMapping("/unregister/{performanceId}")
+    @PostMapping("/unregister/{performanceId}")
     public void unregisterPerformanceById(@PathVariable UUID performanceId) {
         service.deletePerformanceById(performanceId);
     }

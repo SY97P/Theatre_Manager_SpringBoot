@@ -1,7 +1,6 @@
 package com.tangerine.theatre_manager.ticket.repository.dto;
 
-import com.tangerine.theatre_manager.ticket.vo.Price;
-import com.tangerine.theatre_manager.ticket.vo.Quantity;
+import com.tangerine.theatre_manager.performance.vo.Price;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -11,7 +10,6 @@ public record TicketEntity(
         UUID orderId,
         UUID performanceId,
         Price ticketPrice,
-        Quantity ticketQuantity,
         LocalDate reservedDate
 ) {
 }

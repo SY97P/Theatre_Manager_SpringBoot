@@ -2,10 +2,7 @@ package com.tangerine.theatre_manager.performance.repository;
 
 import com.tangerine.theatre_manager.global.exception.SqlException;
 import com.tangerine.theatre_manager.performance.repository.model.Performance;
-import com.tangerine.theatre_manager.performance.vo.AgeRate;
-import com.tangerine.theatre_manager.performance.vo.Genre;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
-import com.tangerine.theatre_manager.performance.vo.Stage;
+import com.tangerine.theatre_manager.performance.vo.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -33,7 +30,8 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
         LocalDate openRun = resultSet.getDate("open_run").toLocalDate();
         LocalDate closeRun = resultSet.getDate("close_run").toLocalDate();
         Stage stage = Stage.valueOf(resultSet.getString("stage"));
-        return new Performance(performanceId, performanceName, genre, ageRate, openRun, closeRun, stage);
+        Price price = new Price(resultSet.getLong("price"));
+        return new Performance(performanceId, performanceName, genre, ageRate, openRun, closeRun, stage, price);
     };
 
     private static Map<String, Object> toParamMap(Performance performance) {
@@ -45,14 +43,15 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
         paramMap.put("openRun", Date.valueOf(performance.openRun()));
         paramMap.put("closeRun", Date.valueOf(performance.closeRun()));
         paramMap.put("stage", performance.stage().toString());
+        paramMap.put("price", performance.price().priceValue());
         return paramMap;
     }
 
     @Override
     public void insert(Performance performance) {
         int result = jdbcTemplate.update(
-                "INSERT INTO performances(performance_id, performance_name, genre, age_rate, open_run, close_run, stage)" +
-                        " VALUES (:performanceId, :performanceName, :genre, :ageRate, :openRun, :closeRun, :stage)",
+                "INSERT INTO performances(performance_id, performance_name, genre, age_rate, open_run, close_run, stage, price)" +
+                        " VALUES (:performanceId, :performanceName, :genre, :ageRate, :openRun, :closeRun, :stage, :price)",
                 toParamMap(performance)
         );
         if (result != 1) {
@@ -63,7 +62,7 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
     @Override
     public void update(Performance performance) {
         int result = jdbcTemplate.update(
-                "UPDATE performances SET performance_name = :performanceName, genre = :genre, age_rate = :ageRate, open_run = :openRun, close_run = :closeRun, stage = :stage" +
+                "UPDATE performances SET performance_name = :performanceName, genre = :genre, age_rate = :ageRate, open_run = :openRun, close_run = :closeRun, stage = :stage, price = :price" +
                         " WHERE performance_id = :performanceId",
                 toParamMap(performance)
         );
@@ -91,7 +90,7 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
     @Override
     public List<Performance> findAll() {
         return jdbcTemplate.query(
-                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage FROM performances",
+                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage, price FROM performances",
                 performanceRowMapper
         );
     }
@@ -99,7 +98,7 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
     @Override
     public Performance findById(UUID performanceId) {
         return jdbcTemplate.queryForObject(
-                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage" +
+                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage, price" +
                         " FROM performances WHERE performance_id = :performanceId",
                 Collections.singletonMap("performanceId", performanceId.toString()),
                 performanceRowMapper);
@@ -108,7 +107,7 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
     @Override
     public Performance findByName(PerformanceName performanceName) {
         return jdbcTemplate.queryForObject(
-                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage" +
+                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage, price" +
                         " FROM performances WHERE performance_name = :performanceName",
                 Collections.singletonMap("performanceName", performanceName.performanceNameValue()),
                 performanceRowMapper);
@@ -117,7 +116,7 @@ public class JdbcPerformanceRepository implements PerformanceRepository {
     @Override
     public Performance findByDate(LocalDate date) {
         return jdbcTemplate.queryForObject(
-                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage" +
+                "SELECT performance_id, performance_name, genre, age_rate, open_run, close_run, stage, price" +
                         " FROM performances WHERE :date BETWEEN open_run AND close_run",
                 Collections.singletonMap("date", date),
                 performanceRowMapper);

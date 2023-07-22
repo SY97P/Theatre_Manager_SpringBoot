@@ -6,7 +6,6 @@ import java.util.UUID;
 public record CreateTicketRequest(
         UUID performanceId,
         long ticketPrice,
-        long ticketQuantity,
         LocalDate reservedDate
 ) {
 }

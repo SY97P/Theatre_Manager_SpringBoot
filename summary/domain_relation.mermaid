@@ -1,5 +1,42 @@
 classDiagram
 
+    %% domain TicketOrder
+    class TicketOrder {
+        UUID ticketOrderId
+        Email email
+        LocalDate orderedAt
+        OrderStatus ticketOrderStatus
+        List< Ticket > tickets
+    }
+
+    class Email {
+        String emailValue
+    }
+
+    class OrderStatus {
+        <<enumeration>>
+        ACCEPTED
+        PAYMENT_CONFIRMED
+        RESERVED
+    }
+
+    TicketOrder --> Email
+    TicketOrder --> OrderStatus
+    TicketOrder --> Ticket
+    Ticket --> Performance
+
+    %% domain Ticket
+    class Ticket {
+        UUID ticketId
+        UUID orderId
+        UUID performanceId
+        Price price
+        Quantity quantity
+        LocalDate reservedAt
+    }
+
+    Ticket --> Price
+
     %% domain Performance
     class Performance {
         UUID performanceId
@@ -9,6 +46,7 @@ classDiagram
         LocalDate openRun
         LocalDate closeRun
         Stage stage
+        Price price
     }
 
     class PerformanceName {
@@ -35,55 +73,12 @@ classDiagram
         B1, B2
     }
 
-    Performance --> PerformanceName
-    Performance --> Genre
-    Performance --> AgeRate
-    Performance --> Stage
-
-    %% domain Ticket
-    class Ticket {
-        UUID ticketId
-        UUID orderId
-        UUID performanceId
-        Price price
-        Quantity quantity
-        LocalDate reservedAt
-    }
-
     class Price {
         long priceValue
     }
 
-    class Quantity {
-        long quantityValue
-    }
-
-    Ticket --> Price
-    Ticket --> Quantity
-
-    %% domain TicketOrder
-    class TicketOrder {
-        UUID ticketOrderId
-        Email email
-        LocalDate orderedAt
-        OrderStatus ticketOrderStatus
-        List< Ticket > tickets
-    }
-
-    class Email {
-        String emailValue
-    }
-
-    class OrderStatus {
-        <<enumeration>>
-        ACCEPTED
-        PAYMENT_CONFIRMED
-        RESERVED
-    }
-
-    TicketOrder --> Email
-    TicketOrder --> OrderStatus
-
-    TicketOrder --> Ticket
-
-    Ticket --> Performance
+    Performance --> PerformanceName
+    Performance --> Genre
+    Performance --> AgeRate
+    Performance --> Stage
+    Performance --> Price

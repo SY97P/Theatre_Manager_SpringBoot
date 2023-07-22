@@ -2,8 +2,7 @@ package com.tangerine.theatre_manager.ticket.repository;
 
 import com.tangerine.theatre_manager.global.exception.SqlException;
 import com.tangerine.theatre_manager.ticket.repository.dto.TicketEntity;
-import com.tangerine.theatre_manager.ticket.vo.Price;
-import com.tangerine.theatre_manager.ticket.vo.Quantity;
+import com.tangerine.theatre_manager.performance.vo.Price;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,9 +27,8 @@ public class JdbcTicketRepository implements TicketRepository {
         UUID orderId = UUID.fromString(resultSet.getString("order_id"));
         UUID performanceId = UUID.fromString(resultSet.getString("performance_id"));
         Price ticketPrice = new Price(resultSet.getLong("ticket_price"));
-        Quantity ticketQuantity = new Quantity(resultSet.getLong("ticket_quantity"));
         LocalDate reservedDate = resultSet.getDate("reserved_date").toLocalDate();
-        return new TicketEntity(ticketId, orderId, performanceId, ticketPrice, ticketQuantity, reservedDate);
+        return new TicketEntity(ticketId, orderId, performanceId, ticketPrice, reservedDate);
     };
 
     private static Map<String, Object> toParamMap(TicketEntity ticket) {
@@ -39,7 +37,6 @@ public class JdbcTicketRepository implements TicketRepository {
         paramMap.put("orderId", ticket.orderId().toString());
         paramMap.put("performanceId", ticket.performanceId().toString());
         paramMap.put("ticketPrice", ticket.ticketPrice().priceValue());
-        paramMap.put("ticketQuantity", ticket.ticketQuantity().quantityValue());
         paramMap.put("reservedDate", Date.valueOf(ticket.reservedDate()));
         return paramMap;
     }
@@ -47,8 +44,8 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public void insert(TicketEntity ticket) {
         int result = jdbcTemplate.update(
-                "INSERT INTO tickets (ticket_id, order_id, performance_id, ticket_price, ticket_quantity, reserved_date)" +
-                        " VALUES (:ticketId, :orderId, :performanceId, :ticketPrice, :ticketQuantity, :reservedDate)",
+                "INSERT INTO tickets (ticket_id, order_id, performance_id, ticket_price, reserved_date)" +
+                        " VALUES (:ticketId, :orderId, :performanceId, :ticketPrice, :reservedDate)",
                 toParamMap(ticket)
         );
         if (result != 1) {
@@ -59,7 +56,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public void update(TicketEntity ticket) {
         int result = jdbcTemplate.update(
-                "UPDATE tickets SET order_id = :orderId, performance_id = :performanceId, ticket_price = :ticketPrice, ticket_quantity = :ticketQuantity, reserved_date = :reservedDate" +
+                "UPDATE tickets SET order_id = :orderId, performance_id = :performanceId, ticket_price = :ticketPrice, reserved_date = :reservedDate" +
                         " WHERE ticket_id = :ticketId",
                 toParamMap(ticket)
         );
@@ -95,7 +92,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public List<TicketEntity> findAll() {
         return jdbcTemplate.query(
-                "SELECT ticket_id, order_id, performance_id, ticket_price, ticket_quantity, reserved_date FROM tickets",
+                "SELECT ticket_id, order_id, performance_id, ticket_price, reserved_date FROM tickets",
                 ticketRowMapper
         );
     }
@@ -103,7 +100,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public TicketEntity findById(UUID ticketId) {
         return jdbcTemplate.queryForObject(
-                "SELECT ticket_id, order_id, performance_id, ticket_price, ticket_quantity, reserved_date" +
+                "SELECT ticket_id, order_id, performance_id, ticket_price, reserved_date" +
                         " FROM tickets WHERE ticket_id = :ticketId",
                 Collections.singletonMap("ticketId", ticketId.toString()),
                 ticketRowMapper
@@ -113,7 +110,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public TicketEntity findByPerformanceId(UUID performanceId) {
         return jdbcTemplate.queryForObject(
-                "SELECT ticket_id, order_id, performance_id, ticket_price, ticket_quantity, reserved_date FROM tickets WHERE performance_id = :performanceId",
+                "SELECT ticket_id, order_id, performance_id, ticket_price, reserved_date FROM tickets WHERE performance_id = :performanceId",
                 Collections.singletonMap("performanceId", performanceId.toString()),
                 ticketRowMapper
         );
@@ -122,7 +119,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public List<TicketEntity> findByOrderId(UUID orderId) {
         return jdbcTemplate.query(
-                "SELECT ticket_id, order_id, performance_id, ticket_price, ticket_quantity, reserved_date FROM tickets WHERE order_id = :orderId",
+                "SELECT ticket_id, order_id, performance_id, ticket_price, reserved_date FROM tickets WHERE order_id = :orderId",
                 Collections.singletonMap("orderId", orderId.toString()),
                 ticketRowMapper
         );

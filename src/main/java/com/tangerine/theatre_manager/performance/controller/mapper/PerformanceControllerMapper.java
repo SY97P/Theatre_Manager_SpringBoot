@@ -16,12 +16,15 @@ public interface PerformanceControllerMapper {
 
     @Mapping(target = "performanceId", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(source = "performanceName", target = "performanceName.performanceNameValue")
+    @Mapping(source = "price", target = "price.priceValue")
     PerformanceParam requestToParam(CreatePerformanceRequest request);
 
     @Mapping(source = "performanceName", target = "performanceName.performanceNameValue")
+    @Mapping(source = "price", target = "price.priceValue")
     PerformanceParam requestToParam(UpdatePerformanceRequest request);
 
     @Mapping(source = "performanceName.performanceNameValue", target = "performanceName")
+    @Mapping(source = "price.priceValue", target = "price")
     PerformanceResponse resultToResponse(PerformanceResult result);
 
 }

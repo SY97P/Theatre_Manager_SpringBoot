@@ -1,10 +1,7 @@
 package com.tangerine.theatre_manager.ticket.order;
 
 import com.tangerine.theatre_manager.performance.repository.model.Performance;
-import com.tangerine.theatre_manager.performance.vo.AgeRate;
-import com.tangerine.theatre_manager.performance.vo.Genre;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
-import com.tangerine.theatre_manager.performance.vo.Stage;
+import com.tangerine.theatre_manager.performance.vo.*;
 import com.tangerine.theatre_manager.ticket.order.repository.model.TicketOrderEntity;
 import com.tangerine.theatre_manager.ticket.order.service.dto.TicketOrderParam;
 import com.tangerine.theatre_manager.ticket.order.service.mapper.TicketOrderServiceMapper;
@@ -14,8 +11,6 @@ import com.tangerine.theatre_manager.ticket.order.vo.TicketOrderStatus;
 import com.tangerine.theatre_manager.ticket.repository.dto.TicketEntity;
 import com.tangerine.theatre_manager.ticket.service.mapper.TicketServiceMapper;
 import com.tangerine.theatre_manager.ticket.service.model.Ticket;
-import com.tangerine.theatre_manager.ticket.vo.Price;
-import com.tangerine.theatre_manager.ticket.vo.Quantity;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;
@@ -31,17 +26,17 @@ public class TicketOrderTestData {
             .toList();
 
     public static final List<Performance> PERFORMANCE_DOMAINS = List.of(
-            new Performance(UUID.randomUUID(), new PerformanceName("밤의 여왕 아리아"), Genre.OPERA, AgeRate.ALL, LocalDate.of(2023, 1, 23), LocalDate.of(2023, 8, 14), Stage.A1),
-            new Performance(UUID.randomUUID(), new PerformanceName("쉬어매드니스"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2022, 6, 1), LocalDate.of(2023, 10, 31), Stage.A2),
-            new Performance(UUID.randomUUID(), new PerformanceName("시라노"), Genre.MUSICAL, AgeRate.ADULT_ONLY, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 1), Stage.B1),
-            new Performance(UUID.randomUUID(), new PerformanceName("라면"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2023, 10, 23), LocalDate.of(2024, 3, 20), Stage.B2)
+            new Performance(UUID.randomUUID(), new PerformanceName("밤의 여왕 아리아"), Genre.OPERA, AgeRate.ALL, LocalDate.of(2023, 1, 23), LocalDate.of(2023, 8, 14), Stage.A1, new Price(1000)),
+            new Performance(UUID.randomUUID(), new PerformanceName("쉬어매드니스"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2022, 6, 1), LocalDate.of(2023, 10, 31), Stage.A2, new Price(28000)),
+            new Performance(UUID.randomUUID(), new PerformanceName("시라노"), Genre.MUSICAL, AgeRate.ADULT_ONLY, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 1), Stage.B1, new Price(3000)),
+            new Performance(UUID.randomUUID(), new PerformanceName("라면"), Genre.PLAY, AgeRate.FIFTEEN, LocalDate.of(2023, 10, 23), LocalDate.of(2024, 3, 20), Stage.B2, new Price(55000))
     );
 
     private static final List<TicketEntity> ticketEntities = List.of(
-            new TicketEntity(UUID.randomUUID(), orderIds.get(0), PERFORMANCE_DOMAINS.get(0).performanceId(), new Price(1000), new Quantity(2), LocalDate.now()),
-            new TicketEntity(UUID.randomUUID(), orderIds.get(1), PERFORMANCE_DOMAINS.get(1).performanceId(), new Price(28000), new Quantity(1), LocalDate.now()),
-            new TicketEntity(UUID.randomUUID(), orderIds.get(2), PERFORMANCE_DOMAINS.get(2).performanceId(), new Price(3000), new Quantity(22), LocalDate.now()),
-            new TicketEntity(UUID.randomUUID(), orderIds.get(3), PERFORMANCE_DOMAINS.get(3).performanceId(), new Price(55000), new Quantity(8), LocalDate.now())
+            new TicketEntity(UUID.randomUUID(), orderIds.get(0), PERFORMANCE_DOMAINS.get(0).performanceId(), new Price(1000), LocalDate.now()),
+            new TicketEntity(UUID.randomUUID(), orderIds.get(1), PERFORMANCE_DOMAINS.get(1).performanceId(), new Price(28000), LocalDate.now()),
+            new TicketEntity(UUID.randomUUID(), orderIds.get(2), PERFORMANCE_DOMAINS.get(2).performanceId(), new Price(3000), LocalDate.now()),
+            new TicketEntity(UUID.randomUUID(), orderIds.get(3), PERFORMANCE_DOMAINS.get(3).performanceId(), new Price(55000), LocalDate.now())
     );
 
     private static final List<Ticket> ticketDomains = ticketEntities.stream()

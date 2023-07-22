@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.performance.controller.dto;
 
+import com.tangerine.theatre_manager.performance.vo.Price;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -10,6 +12,7 @@ public record UpdatePerformanceRequest(
         String ageRate,
         LocalDate openRun,
         LocalDate closeRun,
-        String stage
+        String stage,
+        long price
 ) {
 }

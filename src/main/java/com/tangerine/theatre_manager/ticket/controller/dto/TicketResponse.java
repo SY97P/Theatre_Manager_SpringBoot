@@ -8,7 +8,6 @@ public record TicketResponse(
         UUID orderId,
         UUID performanceId,
         long ticketPrice,
-        long ticketQuantity,
         LocalDate reservedDate
 ) {
 }

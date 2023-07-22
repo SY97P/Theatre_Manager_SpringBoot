@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.performance.controller.dto;
 
+import com.tangerine.theatre_manager.performance.vo.Price;
+
 import java.time.LocalDate;
 
 public record CreatePerformanceRequest(
@@ -8,6 +10,7 @@ public record CreatePerformanceRequest(
         String ageRate,
         LocalDate openRun,
         LocalDate closeRun,
-        String stage
+        String stage,
+        long price
 ) {
 }

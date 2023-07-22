@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS performances
     open_run         DATE        NOT NULL,
     close_run        DATE        NOT NULL,
     stage            VARCHAR(10) NOT NULL,
+    price            LONG        NOT NULL,
 
     PRIMARY KEY (performance_id)
 );
@@ -27,7 +28,6 @@ CREATE TABLE IF NOT EXISTS tickets
     order_id        VARCHAR(50) NOT NULL,
     performance_id  VARCHAR(50) NOT NULL,
     ticket_price    LONG        NOT NULL,
-    ticket_quantity LONG        NOT NULL,
     reserved_date   DATE        NOT NULL,
 
     PRIMARY KEY (ticket_id),
