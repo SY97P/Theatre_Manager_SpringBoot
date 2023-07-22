@@ -23,22 +23,22 @@ public class PerformanceRestController {
         this.service = service;
     }
 
-    @GetMapping("/register")
+    @PostMapping("/register")
     public void registerPerformance(@RequestBody CreatePerformanceRequest request) {
         service.createPerformance(PerformanceControllerMapper.INSTANCE.requestToParam(request));
     }
 
-    @GetMapping("/update")
+    @PostMapping("/update")
     public void updatePerformance(@RequestBody UpdatePerformanceRequest request) {
         service.updatePerformance(PerformanceControllerMapper.INSTANCE.requestToParam(request));
     }
 
-    @GetMapping("/unregister/all")
+    @DeleteMapping("/unregister/all")
     public void unregisterPerformances() {
         service.deleteAllPerformance();
     }
 
-    @GetMapping("/unregister/{performanceId}")
+    @DeleteMapping("/unregister/{performanceId}")
     public void unregisterPerformanceById(@PathVariable UUID performanceId) {
         service.deletePerformanceById(performanceId);
     }

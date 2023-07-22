@@ -10,7 +10,7 @@ public record PerformanceName(String performanceNameValue) {
 
     private void validate(String performanceNameValue) {
         if (performanceNameValue == null || performanceNameValue.isBlank()) {
-            throw new InvalidDataException("Performance name is invalid");
+            throw new InvalidDataException("Performance name is invalid: " + performanceNameValue);
         }
     }
 }
