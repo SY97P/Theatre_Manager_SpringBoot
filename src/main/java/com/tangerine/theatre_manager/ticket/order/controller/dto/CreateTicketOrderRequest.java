@@ -6,7 +6,7 @@ import com.tangerine.theatre_manager.ticket.order.vo.Email;
 import java.util.List;
 
 public record CreateTicketOrderRequest(
-        Email email,
+        String email,
         List<CreateTicketRequest> tickets
 ) {
 }

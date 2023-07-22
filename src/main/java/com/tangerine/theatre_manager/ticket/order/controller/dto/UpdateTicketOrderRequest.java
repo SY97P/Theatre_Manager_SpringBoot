@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public record UpdateTicketOrderRequest(
         UUID orderId,
-        Email email,
+        String email,
         LocalDate orderedAt,
         TicketOrderStatus ticketOrderStatus,
         List<UpdateTicketRequest> tickets

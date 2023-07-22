@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/ticket-orders")
 public class TicketOrderRestController {
 
     private final TicketOrderService service;
