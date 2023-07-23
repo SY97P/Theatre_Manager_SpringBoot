@@ -24,8 +24,9 @@
 ### 🗂️ Class Diagram
 ![class_diagram.png](summary%2Fclass_diagram.png)
 
-### 🪢 Domain Relation 
+### 🪢 Domain Relation & ERD
 ![domain_relation.png](summary%2Fdomain_relation.png)
+![erd.png](summary%2Ferd.png)
 
 ### 🕹️ 사용한 기술
 - Spring Boot
