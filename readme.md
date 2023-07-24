@@ -24,8 +24,10 @@
 ### 🗂️ Class Diagram
 ![class_diagram.png](summary%2Fclass_diagram.png)
 
-### 🪢 Domain Relation & ERD
+### 🪢 Domain Relation
 ![domain_relation.png](summary%2Fdomain_relation.png)
+
+### 🍔 ERD
 ![erd.png](summary%2Ferd.png)
 
 ### 🕹️ 사용한 기술
