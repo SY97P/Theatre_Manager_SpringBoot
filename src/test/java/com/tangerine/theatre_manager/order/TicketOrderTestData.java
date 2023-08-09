@@ -7,6 +7,7 @@ import com.tangerine.theatre_manager.order.ticket.model.Ticket;
 import com.tangerine.theatre_manager.order.vo.Email;
 import com.tangerine.theatre_manager.order.vo.TicketOrderStatus;
 import com.tangerine.theatre_manager.performance.vo.Price;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class TicketOrderTestData {
+
+    private static final TicketOrderServiceMapper mapper = new TicketOrderServiceMapper();
 
     private static final List<UUID> orderIds = IntStream.rangeClosed(0, 4)
             .mapToObj(i -> UUID.randomUUID())
@@ -36,7 +39,7 @@ public class TicketOrderTestData {
     );
 
     public static final List<TicketOrderEntity> TICKET_ORDER_ENTITIES = TICKET_ORDER_DOMAINS.stream()
-            .map(TicketOrderServiceMapper.INSTANCE::domainToEntity)
+            .map(mapper::domainToEntity)
             .toList();
 
     public static Stream<Arguments> provideDomains() {

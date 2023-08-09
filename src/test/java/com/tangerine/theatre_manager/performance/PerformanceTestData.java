@@ -12,6 +12,8 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 public class PerformanceTestData {
+    
+    private static final PerformanceServiceMapper mapper = new PerformanceServiceMapper();
 
     public static Performance newDomain(Performance domain) {
         return new Performance(domain.performanceId(), new PerformanceName("새로운 연극"), Genre.PLAY, AgeRate.ALL, LocalDate.of(2023, 4, 12), LocalDate.of(2023, 9, 1), Stage.B1, new Price(1000));
@@ -29,7 +31,7 @@ public class PerformanceTestData {
     );
 
     public static List<Performance> performanceDomains = performanceParams.stream()
-            .map(PerformanceServiceMapper.INSTANCE::paramToDomain)
+            .map(mapper::paramToDomain)
             .toList();
 
     static Stream<Arguments> provideParams() {
@@ -39,7 +41,7 @@ public class PerformanceTestData {
 
     static Stream<Arguments> provideDomains() {
         return performanceParams.stream()
-                .map(PerformanceServiceMapper.INSTANCE::paramToDomain)
+                .map(mapper::paramToDomain)
                 .map(Arguments::of);
     }
 }

@@ -18,16 +18,18 @@ public class DefaultTicketOrderService implements TicketOrderService {
 
     private final TicketOrderRepository repository;
     private final TicketService ticketService;
+    private final TicketOrderServiceMapper mapper;
 
-    public DefaultTicketOrderService(TicketOrderRepository repository, TicketService ticketService) {
+    public DefaultTicketOrderService(TicketOrderRepository repository, TicketService ticketService, TicketOrderServiceMapper mapper) {
         this.repository = repository;
         this.ticketService = ticketService;
+        this.mapper = mapper;
     }
 
     @Override
     @Transactional
     public void createOrder(TicketOrder ticketOrder) {
-        repository.insert(TicketOrderServiceMapper.INSTANCE.domainToEntity(ticketOrder));
+        repository.insert(mapper.domainToEntity(ticketOrder));
         ticketService.createTickets(ticketOrder.tickets());
     }
 

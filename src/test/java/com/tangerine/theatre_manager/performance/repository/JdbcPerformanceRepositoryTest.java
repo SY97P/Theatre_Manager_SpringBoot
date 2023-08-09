@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.catchException;
 
 @JdbcTest
 @ActiveProfiles("test")
-@Import(JdbcPerformanceRepository.class)
+@Import({JdbcPerformanceRepository.class})
 class JdbcPerformanceRepositoryTest {
 
     @Autowired

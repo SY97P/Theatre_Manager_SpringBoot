@@ -15,17 +15,19 @@ import java.util.UUID;
 public class PerformanceService {
 
     private final PerformanceRepository repository;
+    private final PerformanceServiceMapper mapper;
 
-    public PerformanceService(PerformanceRepository repository) {
+    public PerformanceService(PerformanceRepository repository, PerformanceServiceMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     public void createPerformance(PerformanceParam param) {
-        repository.insert(PerformanceServiceMapper.INSTANCE.paramToDomain(param));
+        repository.insert(mapper.paramToDomain(param));
     }
 
     public void updatePerformance(PerformanceParam param) {
-        repository.update(PerformanceServiceMapper.INSTANCE.paramToDomain(param));
+        repository.update(mapper.paramToDomain(param));
     }
 
     public void deleteAllPerformance() {
@@ -39,20 +41,20 @@ public class PerformanceService {
     public List<PerformanceResult> findAllPerformance() {
         return repository.findAll()
                 .stream()
-                .map(PerformanceServiceMapper.INSTANCE::domainToResult)
+                .map(mapper::domainToResult)
                 .toList();
     }
 
     public PerformanceResult findPerformanceById(UUID performanceId) {
-        return PerformanceServiceMapper.INSTANCE.domainToResult(repository.findById(performanceId));
+        return mapper.domainToResult(repository.findById(performanceId));
     }
 
     public PerformanceResult findPerformanceByName(PerformanceName performanceName) {
-        return PerformanceServiceMapper.INSTANCE.domainToResult(repository.findByName(performanceName));
+        return mapper.domainToResult(repository.findByName(performanceName));
     }
 
     public PerformanceResult findPerformanceByDate(LocalDate date) {
-        return PerformanceServiceMapper.INSTANCE.domainToResult(repository.findByDate(date));
+        return mapper.domainToResult(repository.findByDate(date));
     }
 
 }

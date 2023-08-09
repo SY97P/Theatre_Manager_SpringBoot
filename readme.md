@@ -32,11 +32,13 @@
 
 ### 🕹️ 사용한 기술
 - Spring Boot
-  - REST api
+  - JdbcTemplate
+  - JPA
 - Jasypt
 - Mysql Database
 - H2 Database (for Test)
-- mapstruct
+- ~~mapstruct~~
+  - 의존성에 구애 받지 않고 개발하는 것을 목표로 제거했습니다.
 
 ## ⏳ Retrospect
 ### 🎾 클래스 설계

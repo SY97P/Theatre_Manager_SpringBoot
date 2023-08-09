@@ -3,16 +3,35 @@ package com.tangerine.theatre_manager.performance.service.mapper;
 import com.tangerine.theatre_manager.performance.repository.model.Performance;
 import com.tangerine.theatre_manager.performance.service.dto.PerformanceParam;
 import com.tangerine.theatre_manager.performance.service.dto.PerformanceResult;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface PerformanceServiceMapper {
+@Component
+public class PerformanceServiceMapper {
 
-    PerformanceServiceMapper INSTANCE = Mappers.getMapper(PerformanceServiceMapper.class);
+    public Performance paramToDomain(PerformanceParam param) {
+        return new Performance(
+                param.performanceId(),
+                param.performanceName(),
+                param.genre(),
+                param.ageRate(),
+                param.openRun(),
+                param.closeRun(),
+                param.stage(),
+                param.price()
+        );
+    }
 
-    Performance paramToDomain(PerformanceParam param);
-
-    PerformanceResult domainToResult(Performance domain);
+    public PerformanceResult domainToResult(Performance domain) {
+        return new PerformanceResult(
+                domain.performanceId(),
+                domain.performanceName(),
+                domain.genre(),
+                domain.ageRate(),
+                domain.openRun(),
+                domain.closeRun(),
+                domain.stage(),
+                domain.price()
+        );
+    }
 
 }

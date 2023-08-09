@@ -1,18 +1,27 @@
 package com.tangerine.theatre_manager.order.ticket.controller.mapper;
 
+import com.tangerine.theatre_manager.global.generator.IdGenerator;
 import com.tangerine.theatre_manager.order.ticket.controller.dto.TicketRequest;
 import com.tangerine.theatre_manager.order.ticket.model.Ticket;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import com.tangerine.theatre_manager.performance.vo.Price;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface TicketControllerMapper {
+@Component
+public class TicketControllerMapper {
 
-    TicketControllerMapper INSTANCE = Mappers.getMapper(TicketControllerMapper.class);
+    private final IdGenerator idGenerator;
 
-    @Mapping(target = "ticketId", expression = "java(java.util.UUID.randomUUID())")
-    @Mapping(source = "ticketPrice", target = "ticketPrice.priceValue")
-    Ticket requestToDomain(TicketRequest request);
+    public TicketControllerMapper(IdGenerator idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
+    public Ticket requestToDomain(TicketRequest request) {
+        return new Ticket(
+                idGenerator.getGeneratedId(),
+                request.orderId(),
+                new Price(request.ticketPrice()),
+                request.reservedDate()
+        );
+    }
 
 }

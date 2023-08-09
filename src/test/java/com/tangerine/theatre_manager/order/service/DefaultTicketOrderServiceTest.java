@@ -1,24 +1,21 @@
 package com.tangerine.theatre_manager.order.service;
 
-import com.tangerine.theatre_manager.order.repository.JdbcTicketOrderRepository;
 import com.tangerine.theatre_manager.order.service.model.TicketOrder;
-import com.tangerine.theatre_manager.order.ticket.repository.JdbcTicketRepository;
-import com.tangerine.theatre_manager.order.ticket.service.TicketService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
 
-@JdbcTest
 @ActiveProfiles("test")
-@Import({DefaultTicketOrderService.class, JdbcTicketOrderRepository.class, TicketService.class, JdbcTicketRepository.class})
+@SpringBootTest
+@Transactional
 class DefaultTicketOrderServiceTest {
 
     @Autowired

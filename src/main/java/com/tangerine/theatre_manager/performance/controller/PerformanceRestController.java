@@ -6,6 +6,7 @@ import com.tangerine.theatre_manager.performance.controller.dto.UpdatePerformanc
 import com.tangerine.theatre_manager.performance.controller.mapper.PerformanceControllerMapper;
 import com.tangerine.theatre_manager.performance.service.PerformanceService;
 import com.tangerine.theatre_manager.performance.vo.PerformanceName;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,57 +15,54 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/performances")
+@RequestMapping(path = "/api/performances")
 public class PerformanceRestController {
 
     private final PerformanceService service;
+    private final PerformanceControllerMapper mapper;
 
-    public PerformanceRestController(PerformanceService service) {
+    public PerformanceRestController(PerformanceService service, PerformanceControllerMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
-    @PostMapping("/register")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void registerPerformance(@RequestBody CreatePerformanceRequest request) {
-        service.createPerformance(PerformanceControllerMapper.INSTANCE.requestToParam(request));
+        service.createPerformance(mapper.requestToParam(request));
     }
 
-    @PostMapping("/update")
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updatePerformance(@RequestBody UpdatePerformanceRequest request) {
-        service.updatePerformance(PerformanceControllerMapper.INSTANCE.requestToParam(request));
+        service.updatePerformance(mapper.requestToParam(request));
     }
 
-    @PostMapping("/unregister/all")
-    public void unregisterPerformances() {
-        service.deleteAllPerformance();
-    }
-
-    @PostMapping("/unregister/{performanceId}")
+    @DeleteMapping("/{performanceId}")
     public void unregisterPerformanceById(@PathVariable UUID performanceId) {
         service.deletePerformanceById(performanceId);
     }
 
-    @GetMapping("")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PerformanceResponse>> performanceList() {
         return ResponseEntity.ok(
                 service.findAllPerformance()
                         .stream()
-                        .map(PerformanceControllerMapper.INSTANCE::resultToResponse)
+                        .map(mapper::resultToResponse)
                         .toList());
     }
 
-    @GetMapping("/id/{performanceId}")
+    @GetMapping("/{performanceId}")
     public ResponseEntity<PerformanceResponse> performanceById(@PathVariable UUID performanceId) {
-        return ResponseEntity.ok(PerformanceControllerMapper.INSTANCE.resultToResponse(service.findPerformanceById(performanceId)));
+        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceById(performanceId)));
     }
 
     @GetMapping("/name/{performanceName}")
     public ResponseEntity<PerformanceResponse> performanceByName(@PathVariable PerformanceName performanceName) {
-        return ResponseEntity.ok(PerformanceControllerMapper.INSTANCE.resultToResponse(service.findPerformanceByName(performanceName)));
+        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceByName(performanceName)));
     }
 
     @GetMapping("/date/{date}")
     public ResponseEntity<PerformanceResponse> performanceByDate(@PathVariable LocalDate date) {
-        return ResponseEntity.ok(PerformanceControllerMapper.INSTANCE.resultToResponse(service.findPerformanceByDate(date)));
+        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceByDate(date)));
     }
 
 }
