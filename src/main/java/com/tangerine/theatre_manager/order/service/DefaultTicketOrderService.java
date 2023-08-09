@@ -28,16 +28,18 @@ public class DefaultTicketOrderService implements TicketOrderService {
 
     @Override
     @Transactional
-    public void createOrder(TicketOrder ticketOrder) {
+    public UUID createOrder(TicketOrder ticketOrder) {
         repository.insert(mapper.domainToEntity(ticketOrder));
         ticketService.createTickets(ticketOrder.tickets());
+        return ticketOrder.orderId();
     }
 
     @Override
     @Transactional
-    public void deleteOrderById(UUID orderId) {
+    public UUID deleteOrderById(UUID orderId) {
         ticketService.deleteTicketsByOrderId(orderId);
         repository.deleteById(orderId);
+        return orderId;
     }
 
     @Override

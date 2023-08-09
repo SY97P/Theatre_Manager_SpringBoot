@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public interface TicketOrderService {
 
-    void createOrder(TicketOrder param);
+    UUID createOrder(TicketOrder param);
 
-    void deleteOrderById(UUID orderId);
+    UUID deleteOrderById(UUID orderId);
 
     TicketOrder findOrderById(UUID orderId);
 

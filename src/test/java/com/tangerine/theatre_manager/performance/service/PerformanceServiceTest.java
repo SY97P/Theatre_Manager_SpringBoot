@@ -74,16 +74,6 @@ class PerformanceServiceTest {
         assertThat(exception).isInstanceOf(SqlException.class);
     }
 
-    @Test
-    @DisplayName("모든 공연을 삭제 시 성공한다.")
-    void deleteAll_Void_DeleteAllPerformance() {
-        service.deleteAllPerformance();
-
-        List<PerformanceResult> result = service.findAllPerformance();
-
-        assertThat(result).isEmpty();
-    }
-
     @ParameterizedTest
     @DisplayName("존재하는 공연을 아이디로 삭제 시 성공한다.")
     @MethodSource("com.tangerine.theatre_manager.performance.PerformanceTestData#provideParams")

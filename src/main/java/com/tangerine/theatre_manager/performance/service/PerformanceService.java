@@ -22,20 +22,19 @@ public class PerformanceService {
         this.mapper = mapper;
     }
 
-    public void createPerformance(PerformanceParam param) {
+    public UUID createPerformance(PerformanceParam param) {
         repository.insert(mapper.paramToDomain(param));
+        return param.performanceId();
     }
 
-    public void updatePerformance(PerformanceParam param) {
+    public UUID updatePerformance(PerformanceParam param) {
         repository.update(mapper.paramToDomain(param));
+        return param.performanceId();
     }
 
-    public void deleteAllPerformance() {
-        repository.deleteAll();
-    }
-
-    public void deletePerformanceById(UUID performanceId) {
+    public UUID deletePerformanceById(UUID performanceId) {
         repository.deleteById(performanceId);
+        return performanceId;
     }
 
     public List<PerformanceResult> findAllPerformance() {

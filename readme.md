@@ -32,7 +32,8 @@
 
 ### 🕹️ 사용한 기술
 - Spring Boot
-  - JdbcTemplate
+  - ~~JdbcTemplate~~
+    - JPA 적용하면서 제거했습니다.
   - JPA
 - Jasypt
 - Mysql Database
