@@ -1,6 +1,6 @@
 classDiagram
 
-    %% domain TicketOrder
+%% domain TicketOrder
     class TicketOrder {
         UUID ticketOrderId
         Email email
@@ -23,8 +23,7 @@ classDiagram
     TicketOrder --> OrderStatus
     TicketOrder --> Ticket
     Ticket --> Performance
-
-    %% domain Ticket
+%% domain Ticket
     class Ticket {
         UUID ticketId
         UUID orderId
@@ -34,8 +33,7 @@ classDiagram
     }
 
     Ticket --> Price
-
-    %% domain Performance
+%% domain Performance
     class Performance {
         UUID performanceId
         PerformanceName performanceName

@@ -3,46 +3,54 @@
 ## 🛎️ Summary
 
 ### 🧩 Requirements
+
 > 혜화동에 차린 나의 극장.<br>
-> 시설 투자를 잘 했기 때문일까? <br> 
+> 시설 투자를 잘 했기 때문일까? <br>
 > 내 극장에서 공연을 올리고 싶어하는 극단이 많다. <br>
-> 극단 요청에 따라 공연 정보를 저장하고, 삭제하는 서비스가 있었으면 좋겠다. <br> 
+> 극단 요청에 따라 공연 정보를 저장하고, 삭제하는 서비스가 있었으면 좋겠다. <br>
 > 또, 관객들은 올려진 공연을 보기 위해 티켓을 구매하는 서비스도 있었으면 좋겠다.
 
 - for 극단
-  - 공연 정보를 form 에 입력해서 정보 추가
-  - 공연 정보 삭제
+    - 공연 정보를 form 에 입력해서 정보 추가
+    - 공연 정보 삭제
 - for 관객
-  - 등록된 공연 정보 선택해 티켓 구매
-  - 티켓 구매 수량 선택
-  - 공연 기간이 아닌 날짜를 선택했을때 알림
-  - 최종 구매한 티켓에 대해서 결제
+    - 등록된 공연 정보 선택해 티켓 구매
+    - 티켓 구매 수량 선택
+    - 공연 기간이 아닌 날짜를 선택했을때 알림
+    - 최종 구매한 티켓에 대해서 결제
 
 ### 🧬 Flow Chart
+
 ![flow_chart.png](summary%2Fflow_chart.png)
 
 ### 🗂️ Class Diagram
+
 ![class_diagram.png](summary%2Fclass_diagram.png)
 
 ### 🪢 Domain Relation
+
 ![domain_relation.png](summary%2Fdomain_relation.png)
 
 ### 🍔 ERD
+
 ![erd.png](summary%2Ferd.png)
 
 ### 🕹️ 사용한 기술
+
 - Spring Boot
-  - ~~JdbcTemplate~~
-    - JPA 적용하면서 제거했습니다.
-  - JPA
+    - ~~JdbcTemplate~~
+        - JPA 적용하면서 제거했습니다.
+    - JPA
 - Jasypt
 - Mysql Database
 - H2 Database (for Test)
 - ~~mapstruct~~
-  - 의존성에 구애 받지 않고 개발하는 것을 목표로 제거했습니다.
+    - 의존성에 구애 받지 않고 개발하는 것을 목표로 제거했습니다.
 
 ## ⏳ Retrospect
+
 ### 🎾 클래스 설계
+
 <details>
 <summary>클래스 간 관계</summary>
 <div markdown="1">
@@ -76,7 +84,7 @@
     그래서 `티켓` 이라는 개념에 속한 `티켓 주문` 이라는 클래스로 만들어 새로운 개념이 추가되어도 기존의 로직은 변경하지 않도록 설계했습니다. 
     
     클래스 안에서도 최소성이 유지되었으면 좋겠다고 생각해 원시값 포장을 적극적으로 채용했습니다.
- 
+
 </div>
 </details>
 
@@ -88,6 +96,7 @@
     - 도메인 클래스에서 모든 필드에 대한 유효성 검사를 하지 않고, 개별 필드가 자신의 유효성을 판단하고 잘못된 인스턴스 생성을 방지하기 때문에
       낮은 결합, 높은 응집을 만족할 수 있었습니다.
     - 특정 필드에 대한 디버깅이나, 타입변경에도 수정할 곳이 적어, 개발 실수를 미연에 방지하는 좋은 장치인 것 같습니다.
+
 </div>
 </details>
 
@@ -108,14 +117,16 @@
     다음부터는 도메인 개념을 먼저 만들고,    
     컨트롤러 로직을 만들면서 필요한 기능이 설계에서 충분히 고려했는지 판단한 후에   
     레포지토리 레벨 구현을 하는 방식으로 작업하려고 합니다.
+
 </div>
 </details>
 
 ### 🍔 테스트 코드
+
 <details>
 <summary>테스트 코드에도 중복이 있는가</summary>
 <div>
-    
+
     저를 딜레마에 빠지게 한 고민입니다. 
     
     동료분들과도 많은 이야기를 나눠봤지만 각자 개인의 의견이 달라, 어떤 것이 정답이라고 할 수 없는 부분인 것 같습니다. 
@@ -188,10 +199,13 @@
 </details>
 
 ### 💊 스프링 프레임워크 구조 (MVC)
+
 - 컨트롤러, 서비스, 레포지토리 각 계층 별로 의존관계를 갖는 데이터 모델을 분리
 
 ## 🖥️ React UI
+
 ### git hub link
+
 [Theatre_Manager_React](https://github.com/SY97P/Theatre_Manager_React.git)
 
 ![main_mode.png](..%2F..%2FReactProjects%2Ftheatre_manager_react%2Fsummary%2Fmain_mode.png)

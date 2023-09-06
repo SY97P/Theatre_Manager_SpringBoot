@@ -1,29 +1,26 @@
 classDiagram
 
-    %% application
+%% application
     class TicketBoxApplication
-    TicketBoxApplication --> TicketOrderController : TicketOrderRequest
-    TicketBoxApplication --> PerformanceController : XXXPerformanceRequest
-
-    %% controller
+    TicketBoxApplication --> TicketOrderController: TicketOrderRequest
+    TicketBoxApplication --> PerformanceController: XXXPerformanceRequest
+%% controller
     class TicketOrderController
-    TicketOrderController --> TicketOrderService : TicketOrder
+    TicketOrderController --> TicketOrderService: TicketOrder
 
     class PerformanceController
-    PerformanceController --> PerformanceService : PerformanceParam
-
-    %% service
+    PerformanceController --> PerformanceService: PerformanceParam
+%% service
     class TicketOrderService
-    TicketOrderService --> TicketOrderRepository : TicketOrderEntity
-    TicketOrderService --> TicketService : Ticket
+    TicketOrderService --> TicketOrderRepository: TicketOrderEntity
+    TicketOrderService --> TicketService: Ticket
 
     class TicketService
     TicketService --> TicketRepository
 
     class PerformanceService
-    PerformanceService --> PerformanceRepository : Performance
-
-    %% persistence
+    PerformanceService --> PerformanceRepository: Performance
+%% persistence
     class TicketRepository
     TicketRepository --> tickets
 
