@@ -1,0 +1,8 @@
+flowchart TD
+    start --> selectPerformance[Select Performance]
+    selectPerformance --> addTicket[Add Ticket to Order]
+    addTicket --> removeTicket[Remove Ticket from Order]
+    addTicket --> order[Order Tickets]
+    removeTicket -- order has at least one ticket --> order
+    order --> payment
+    payment --> ending[end]

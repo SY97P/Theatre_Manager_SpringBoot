@@ -1,0 +1,6 @@
+flowchart TD
+    start --> fillForm[Fill out Stage Rental Form]
+    fillForm --> validRental[Check the validation of Rental]
+    validRental -- valid --> payment[Payment for Rental]
+    validRental -- invalid --> fillForm
+    payment --> ending[Rental Completed]

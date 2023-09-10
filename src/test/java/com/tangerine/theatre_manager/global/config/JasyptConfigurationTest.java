@@ -2,8 +2,6 @@ package com.tangerine.theatre_manager.global.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,7 @@ class JasyptConfigurationTest {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private JasyptConfiguration jasyptConfiguration;
+  private JasyptConfig jasyptConfiguration;
 
   @Test
   void jasypt() {

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("jasypt.encryptor")
 @EnableEncryptableProperties
-public class JasyptConfiguration {
+public class JasyptConfig {
 
   private final String PATH = "src/main/resources/encryptor_info.txt";
 
