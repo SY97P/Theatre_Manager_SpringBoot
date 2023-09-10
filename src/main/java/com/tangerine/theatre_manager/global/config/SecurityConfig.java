@@ -76,8 +76,7 @@ public class SecurityConfig {
   public WebSecurityCustomizer webSecurityCustomizer() {
     return web -> web.ignoring()
         .requestMatchers(
-            AntPathRequestMatcher.antMatcher("/assets/**"),
-            AntPathRequestMatcher.antMatcher("/h2-console/**")
+            AntPathRequestMatcher.antMatcher("/assets/**")
         );
   }
 
@@ -98,6 +97,7 @@ public class SecurityConfig {
   @Bean
   public JwtAuthenticationProvider jwtAuthenticationProvider() {
     return new JwtAuthenticationProvider(
+        jwtConfig.getHeader(),
         jwtConfig.getIssuer(),
         jwtConfig.getClientSecret(),
         jwtConfig.getExpirySeconds()
@@ -105,7 +105,7 @@ public class SecurityConfig {
   }
 
   public JwtAuthenticationFilter jwtAuthenticationFilter(JwtAuthenticationProvider jwtProvider) {
-    return new JwtAuthenticationFilter(jwtConfig.getHeader(), jwtProvider);
+    return new JwtAuthenticationFilter(jwtProvider);
   }
 
   @Bean

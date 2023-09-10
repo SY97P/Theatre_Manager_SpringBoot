@@ -10,19 +10,18 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.util.SerializationUtils;
 import org.springframework.web.util.WebUtils;
 
-/**
- * 원래 OAuth2 요청 레포지토리가 Session 기반이라 stateful 함. 이걸 cookie 기반 stateless 로 만들어주기 위해서 하나 커스텀
- */
 public class HttpCookieOAuth2AuthorizationRequestRepository implements
     AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
   private static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "OAUTH2_AUTHORIZATION_REQUEST";
+  private static final int OAUTH2_AUTHORIZATION_REQUEST_COOKIE_EXPIRE_SECONDS = 180;
 
   private final String cookieName;
   private final int cookieExpireSeconds;
 
   public HttpCookieOAuth2AuthorizationRequestRepository() {
-    this(OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, 180);
+    this(OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME,
+        OAUTH2_AUTHORIZATION_REQUEST_COOKIE_EXPIRE_SECONDS);
   }
 
   public HttpCookieOAuth2AuthorizationRequestRepository(String cookieName,

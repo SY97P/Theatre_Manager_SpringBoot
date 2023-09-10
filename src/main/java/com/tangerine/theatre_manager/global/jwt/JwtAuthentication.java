@@ -8,10 +8,9 @@ import org.springframework.util.Assert;
 public class JwtAuthentication {
 
   public final String token;
-
   public final String username;
 
-  JwtAuthentication(String token, String username) {
+  protected JwtAuthentication(String token, String username) {
     Assert.isTrue(isNotEmpty(token), "token must be provided.");
     Assert.isTrue(isNotEmpty(username), "username must be provided.");
 

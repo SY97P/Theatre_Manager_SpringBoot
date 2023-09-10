@@ -12,28 +12,36 @@ import jakarta.persistence.Table;
 @Table(name = "group_permission")
 public class GroupPermission {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @Column(name = "id")
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private Group group;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "group_id", referencedColumnName = "id")
+  private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "permission_id", referencedColumnName = "id")
-    private Permission permission;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "permission_id", referencedColumnName = "id")
+  private Permission permission;
 
-    public Long getId() {
-        return id;
-    }
+  protected GroupPermission() {
+  }
 
-    public Group getGroup() {
-        return group;
-    }
+  public GroupPermission(Group group, Permission permission) {
+    this.group = group;
+    this.permission = permission;
+  }
 
-    public Permission getPermission() {
-        return permission;
-    }
+  public Long getId() {
+    return id;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public Permission getPermission() {
+    return permission;
+  }
 
 }

@@ -13,36 +13,46 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Table(name = "user_groups")
 public class Group {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @Column(name = "id")
+  private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String name;
+  @Column(nullable = false, length = 20)
+  private String name;
 
-    @OneToMany(mappedBy = "group")
-    private List<GroupPermission> permissions = new ArrayList<>();
+  @OneToMany(mappedBy = "group")
+  private List<GroupPermission> permissions;
 
-    public Long getId() {
-        return id;
-    }
+  protected Group() {
+    this.permissions = new ArrayList<>();
+  }
 
-    public String getName() {
-        return name;
-    }
+  public Group(String name, List<GroupPermission> permissions) {
+    this.name = name;
+    this.permissions = permissions;
+  }
 
-    public List<SimpleGrantedAuthority> getAuthorities() {
-        return permissions.stream()
-                .map(groupPermission -> new SimpleGrantedAuthority(groupPermission.getPermission().getName()))
-                .toList();
-    }
+  public Long getId() {
+    return id;
+  }
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", permissions=" + permissions +
-                '}';
-    }
+  public String getName() {
+    return name;
+  }
+
+  public List<SimpleGrantedAuthority> getAuthorities() {
+    return permissions.stream()
+        .map(groupPermission -> new SimpleGrantedAuthority(
+            groupPermission.getPermission().getName()))
+        .toList();
+  }
+
+  @Override
+  public String toString() {
+    return "Group{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", permissions=" + permissions +
+        '}';
+  }
 }
