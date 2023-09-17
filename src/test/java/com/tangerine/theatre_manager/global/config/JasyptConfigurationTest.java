@@ -11,27 +11,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class JasyptConfigurationTest {
 
-  private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-  @Autowired
-  private JasyptConfig jasyptConfiguration;
+    @Autowired
+    private JasyptConfig jasyptConfiguration;
 
-  @Test
-  void jasypt() {
-    String url = jasyptConfiguration.getDatasourceUrl();
-    String username = jasyptConfiguration.getDatasourceUsername();
-    String password = jasyptConfiguration.getDatasourcePassword();
+    @Test
+    void jasypt() {
+        String url = jasyptConfiguration.getDatasourceUrl();
+        String username = jasyptConfiguration.getDatasourceUsername();
+        String password = jasyptConfiguration.getDatasourcePassword();
 
-    String encryptedUrl = jasyptConfiguration.jasyptEncrypt(url);
-    String encryptedUserName = jasyptConfiguration.jasyptEncrypt(username);
-    String encryptedPassword = jasyptConfiguration.jasyptEncrypt(password);
+        String encryptedUrl = jasyptConfiguration.jasyptEncrypt(url);
+        String encryptedUserName = jasyptConfiguration.jasyptEncrypt(username);
+        String encryptedPassword = jasyptConfiguration.jasyptEncrypt(password);
 
-    logger.info("\noriginUrl: {} \nencryptedUrl: {}", url, encryptedUrl);
-    logger.info("\noriginUsername: {} \nencryptedUsername: {}", url, encryptedUserName);
-    logger.info("\noriginPassword: {} \nencryptedPassword: {}", url, encryptedPassword);
+        logger.info("\noriginUrl: {} \nencryptedUrl: {}", url, encryptedUrl);
+        logger.info("\noriginUsername: {} \nencryptedUsername: {}", url, encryptedUserName);
+        logger.info("\noriginPassword: {} \nencryptedPassword: {}", url, encryptedPassword);
 
-    assertThat(url).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedUrl));
-    assertThat(username).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedUserName));
-    assertThat(password).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedPassword));
-  }
+        assertThat(url).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedUrl));
+        assertThat(username).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedUserName));
+        assertThat(password).isEqualTo(jasyptConfiguration.jasyptDecrypt(encryptedPassword));
+    }
 }

@@ -30,7 +30,7 @@ spring:
         hibernate:
           type:
             descriptor:
-              sql: trace
+              sql: debug
 
   security:
     oauth2:
@@ -43,18 +43,18 @@ spring:
             user-name-attribute: id
         registration:
           kakao:
-            client-id: 61ac934053eba5b97fb029873a6fa504
-            client-secret: xzFdso9fv5pLefdKFEO6pqbGoMvgHkyz
+            client-id: ea3501375e3a0c5abf65d9b7eba7f442
+            client-secret: LXnGnGNWdJmezmoHmvYwTEIklsoDjKCR
             client-authentication-method: client_secret_post
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-name: kakao
             scope:
-              - profile_nickname
-              - profile_image
+              - account_email
+              - age_range
 
 jwt:
   header: Authorization
   issuer: tangerine
   clientSecret: EENY5W0eegTf1naQB2eDeyCLl5kRS2b8xa5c4qLdS0hmVjtbvo8tOyhPMcAmtPuQ
-  expirySeconds: 60
+  expirySeconds: 360000

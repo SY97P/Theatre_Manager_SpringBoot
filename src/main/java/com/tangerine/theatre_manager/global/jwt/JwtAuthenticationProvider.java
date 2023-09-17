@@ -9,47 +9,46 @@ import java.util.Date;
 
 public final class JwtAuthenticationProvider {
 
-  private final String header;
-  private final String issuer;
-  private final String clientSecret;
-  private final int expirySeconds;
-  private final Algorithm algorithm;
-  private final JWTVerifier jwtVerifier;
+    private final String header;
+    private final String issuer;
+    private final int expirySeconds;
+    private final Algorithm algorithm;
+    private final JWTVerifier jwtVerifier;
 
-  public JwtAuthenticationProvider(
-      String header, String issuer,
-      String clientSecret,
-      int expirySeconds
-  ) {
-    this.header = header;
-    this.issuer = issuer;
-    this.clientSecret = clientSecret;
-    this.expirySeconds = expirySeconds;
-    this.algorithm = Algorithm.HMAC512(clientSecret);
-    this.jwtVerifier = com.auth0.jwt.JWT.require(algorithm)
-        .withIssuer(issuer)
-        .build();
-  }
-
-  public String sign(Claims claims) {
-    Date now = new Date();
-    JWTCreator.Builder builder = JWT.create();
-    builder.withIssuer(issuer);
-    builder.withIssuedAt(now);
-    if (expirySeconds > 0) {
-      builder.withExpiresAt(new Date(now.getTime() + expirySeconds * 1_000L));
+    public JwtAuthenticationProvider(
+            String header,
+            String issuer,
+            String clientSecret,
+            int expirySeconds
+    ) {
+        this.header = header;
+        this.issuer = issuer;
+        this.expirySeconds = expirySeconds;
+        this.algorithm = Algorithm.HMAC512(clientSecret);
+        this.jwtVerifier = JWT.require(algorithm)
+                .withIssuer(issuer)
+                .build();
     }
-    builder.withClaim("username", claims.getUsername());
-    builder.withArrayClaim("roles", claims.getRoles());
-    return builder.sign(algorithm);
-  }
 
-  public Claims verify(String token) throws JWTVerificationException {
-    return new Claims(jwtVerifier.verify(token));
-  }
+    public String sign(Claims claims) {
+        Date now = new Date();
+        JWTCreator.Builder builder = JWT.create();
+        builder.withIssuer(issuer);
+        builder.withIssuedAt(now);
+        if (expirySeconds > 0) {
+            builder.withExpiresAt(new Date(now.getTime() + expirySeconds * 1_000L));
+        }
+        builder.withClaim("email", claims.getEmail());
+        builder.withClaim("role", claims.getAgeRange());
+        return builder.sign(algorithm);
+    }
 
-  public String getHeader() {
-    return header;
-  }
+    public Claims verify(String token) throws JWTVerificationException {
+        return new Claims(jwtVerifier.verify(token));
+    }
+
+    public String getHeader() {
+        return header;
+    }
 
 }

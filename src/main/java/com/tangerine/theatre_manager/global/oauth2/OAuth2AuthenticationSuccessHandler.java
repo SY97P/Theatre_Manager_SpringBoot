@@ -5,81 +5,75 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tangerine.theatre_manager.global.jwt.Claims;
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationProvider;
-import com.tangerine.theatre_manager.global.user.User;
-import com.tangerine.theatre_manager.global.user.UserService;
+import com.tangerine.theatre_manager.global.jwt.JwtPrincipal;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.util.Assert;
 
 public class OAuth2AuthenticationSuccessHandler extends
-    SavedRequestAwareAuthenticationSuccessHandler {
+        SavedRequestAwareAuthenticationSuccessHandler {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-  private final JwtAuthenticationProvider jwtProvider;
+    private final JwtAuthenticationProvider jwtProvider;
 
-  private final UserService userService;
-
-  public OAuth2AuthenticationSuccessHandler(JwtAuthenticationProvider jwtProvider,
-      UserService userService) {
-    this.jwtProvider = jwtProvider;
-    this.userService = userService;
-  }
-
-  @Override
-  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-      Authentication authentication) throws ServletException, IOException {
-    if (authentication instanceof OAuth2AuthenticationToken) {
-      OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
-      OAuth2User principal = oauth2Token.getPrincipal();
-      String registrationId = oauth2Token.getAuthorizedClientRegistrationId();
-
-      User user = processUserOAuth2UserJoin(principal, registrationId);
-
-      String loginSuccessJson = generateLoginSuccessJson(user);
-      response.setContentType(APPLICATION_JSON_VALUE);
-      response.setCharacterEncoding(UTF_8.name());
-      response.setContentLength(loginSuccessJson.getBytes(UTF_8).length);
-      response.getWriter().write(loginSuccessJson);
-    } else {
-      super.onAuthenticationSuccess(request, response, authentication);
+    public OAuth2AuthenticationSuccessHandler(JwtAuthenticationProvider jwtProvider) {
+        this.jwtProvider = jwtProvider;
     }
-  }
 
-  private User processUserOAuth2UserJoin(OAuth2User oAuth2User, String registrationId) {
-    return userService.join(oAuth2User, registrationId);
-  }
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws ServletException, IOException {
+        if (authentication instanceof OAuth2AuthenticationToken oauth2Token) {
+            OAuth2User principal = oauth2Token.getPrincipal();
 
-  private String generateLoginSuccessJson(User user) {
-    String token = generateToken(user);
-    log.debug("Jwt({}) created for oauth2 login user {}", token, user.getUsername());
-    return """
-        {
-          "token": "%s",
-          "username": "%s",
-          "provider": "%s",
-          "group": "%s",
-          "profileImage": "%s",
+            JwtPrincipal jwtPrincipal = getUserInfo(principal);
+
+            String loginSuccessJson = generateLoginSuccessJson(jwtPrincipal);
+            response.setContentType(APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding(UTF_8.name());
+            response.setContentLength(loginSuccessJson.getBytes(UTF_8).length);
+            response.getWriter().write(loginSuccessJson);
+        } else {
+            super.onAuthenticationSuccess(request, response, authentication);
         }
-        """.formatted(token, user.getUsername(), user.getProvider(),
-        user.getGroup().getName(), user.getProfileImage());
-  }
+    }
 
-  private String generateToken(User user) {
-    String[] roles = user.getGroup().getAuthorities()
-        .stream()
-        .map(SimpleGrantedAuthority::getAuthority)
-        .toArray(String[]::new);
-    return jwtProvider.sign(
-        Claims.from(user.getUsername(), roles));
-  }
+    private JwtPrincipal getUserInfo(OAuth2User oAuth2User) {
+        Assert.isTrue(oAuth2User != null, "oauth2User must be provided");
+
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
+
+        Assert.isTrue(account != null, "OAuth2User account is empty");
+
+        String email = (String) account.get("email");
+        String ageRange = (String) account.get("age_range");
+
+        return new JwtPrincipal(email, ageRange);
+    }
+
+    private String generateLoginSuccessJson(JwtPrincipal jwtPrincipal) {
+        String token = generateToken(jwtPrincipal);
+        log.debug("Jwt({}) created for oauth2 login user", token);
+        return """
+                {
+                  "token": "%s"
+                }
+                """.formatted(token);
+    }
+
+    private String generateToken(JwtPrincipal jwtPrincipal) {
+        return jwtProvider.sign(Claims.from(jwtPrincipal.email(), jwtPrincipal.ageRange()));
+    }
 
 }
