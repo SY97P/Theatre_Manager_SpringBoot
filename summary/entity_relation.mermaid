@@ -1,41 +1,48 @@
 classDiagram
 
-%% domain TicketOrder
-    class TicketOrder {
-        UUID ticketOrderId
+%% domain Order
+    class Order {
+        Long id
         Email email
-        LocalDate orderedAt
-        OrderStatus ticketOrderStatus
-        List< Ticket > tickets
+        Price totalPrice
+        OrderStatus orderStatus
+        LocalDate orderedDate
+        LocalDate updatedDate
     }
 
     class Email {
-        String emailValue
+        String address
+    }
+
+    class Price {
+        long value
     }
 
     class OrderStatus {
         <<enumeration>>
         ACCEPTED
-        RESERVED
+        PAYMENT_DONE
+        OUTDATED
     }
 
-    TicketOrder --> Email
-    TicketOrder --> OrderStatus
-    TicketOrder --> Ticket
-    Ticket --> Performance
+    Order --> Email
+    Order --> Price
+    Order --> OrderStatus
 %% domain Ticket
     class Ticket {
-        UUID ticketId
-        UUID orderId
+        Long id
+        Order order
+        Performance performance
         Price price
-        Quantity quantity
-        LocalDate reservedAt
+    %%        Seat seat
     }
 
+    Ticket --> Order
+    Ticket --> Performance
     Ticket --> Price
 %% domain Performance
     class Performance {
-        UUID performanceId
+        Long id
         PerformanceName performanceName
         Genre genre
         AgeRate ageRate
