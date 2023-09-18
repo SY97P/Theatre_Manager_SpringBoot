@@ -4,7 +4,6 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationFilter;
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationProvider;
-import com.tangerine.theatre_manager.global.jwt.JwtConfig;
 import com.tangerine.theatre_manager.global.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.tangerine.theatre_manager.global.oauth2.OAuth2AuthenticationSuccessHandler;
 import org.springframework.context.ApplicationContext;

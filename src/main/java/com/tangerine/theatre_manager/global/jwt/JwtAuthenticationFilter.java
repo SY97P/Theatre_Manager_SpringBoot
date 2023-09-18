@@ -2,7 +2,6 @@ package com.tangerine.theatre_manager.global.jwt;
 
 import static io.micrometer.common.util.StringUtils.isNotEmpty;
 
-import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -12,8 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,8 +49,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         String email = claims.getEmail();
         String ageRange = claims.getAgeRange();
-        JwtPrincipal principal = new JwtPrincipal(email, ageRange);
-        List<GrantedAuthority> authorities = getAuthorities(claims);
+        List<GrantedAuthority> authorities = getAuthorities(claims.getRoles());
+        JwtPrincipal principal = new JwtPrincipal(email, ageRange, authorities);
 
         if (!authorities.isEmpty()) {
             JwtAuthenticationToken authentication = new JwtAuthenticationToken(principal, null, authorities);
@@ -72,10 +72,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         return jwtAuthenticationProvider.verify(token);
     }
 
-    private List<GrantedAuthority> getAuthorities(Claims claims) {
-        return StringUtils.isBlank(claims.getAgeRange())
-                ? Collections.emptyList()
-                : List.of(new SimpleGrantedAuthority(claims.getAgeRange()));
+    private List<GrantedAuthority> getAuthorities(String[] roles) {
+        return roles == null || roles.length == 0
+                ? List.of()
+                : Arrays.stream(roles)
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
     }
 
 }

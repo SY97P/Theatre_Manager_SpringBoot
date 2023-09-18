@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.global.jwt;
+package com.tangerine.theatre_manager.global.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

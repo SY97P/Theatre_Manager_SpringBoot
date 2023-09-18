@@ -10,10 +10,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -58,8 +61,9 @@ public class OAuth2AuthenticationSuccessHandler extends
 
         String email = (String) account.get("email");
         String ageRange = (String) account.get("age_range");
+        List<GrantedAuthority> roles = List.of(new SimpleGrantedAuthority("USER"));
 
-        return new JwtPrincipal(email, ageRange);
+        return new JwtPrincipal(email, ageRange, roles);
     }
 
     private String generateLoginSuccessJson(JwtPrincipal jwtPrincipal) {
@@ -67,13 +71,21 @@ public class OAuth2AuthenticationSuccessHandler extends
         log.debug("Jwt({}) created for oauth2 login user", token);
         return """
                 {
-                  "token": "%s"
+                  "token": "%s",
+                  "email": "%s",
+                  "ageRange": "%s"
                 }
-                """.formatted(token);
+                """.formatted(token, jwtPrincipal.email(), jwtPrincipal.ageRange());
     }
 
     private String generateToken(JwtPrincipal jwtPrincipal) {
-        return jwtProvider.sign(Claims.from(jwtPrincipal.email(), jwtPrincipal.ageRange()));
+        return jwtProvider.sign(
+                Claims.from(
+                        jwtPrincipal.email(),
+                        jwtPrincipal.ageRange(),
+                        jwtPrincipal.roles().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .toArray(String[]::new)));
     }
 
 }

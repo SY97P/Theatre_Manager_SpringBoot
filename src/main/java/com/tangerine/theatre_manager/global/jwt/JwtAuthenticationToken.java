@@ -8,12 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final JwtPrincipal principal;
-    private final String credentials;
+    private final Object principal;
+    private final Object credentials;
 
     JwtAuthenticationToken(
-            JwtPrincipal principal,
-            String credentials,
+            Object principal,
+            Object credentials,
             Collection<? extends GrantedAuthority> authorities
     ) {
         super(authorities);
@@ -24,12 +24,12 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     }
 
     @Override
-    public JwtPrincipal getPrincipal() {
+    public Object getPrincipal() {
         return principal;
     }
 
     @Override
-    public String getCredentials() {
+    public Object getCredentials() {
         return credentials;
     }
 
@@ -45,8 +45,8 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
             return false;
         }
         JwtAuthenticationToken that = (JwtAuthenticationToken) o;
-        return Objects.equals(principal, that.principal) && Objects.equals(
-                credentials, that.credentials);
+        return Objects.equals(principal, that.principal) && Objects.equals(credentials,
+                that.credentials);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     public String toString() {
         return new StringJoiner(", ", JwtAuthenticationToken.class.getSimpleName() + "[", "]")
                 .add("principal=" + principal)
-                .add("credentials='" + credentials + "'")
+                .add("credentials=" + credentials)
                 .toString();
     }
 }
