@@ -2,6 +2,7 @@ package com.tangerine.theatre_manager.global.jwt;
 
 import static io.micrometer.common.util.StringUtils.isNotEmpty;
 
+import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
