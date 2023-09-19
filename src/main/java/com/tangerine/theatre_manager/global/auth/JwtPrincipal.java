@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.global.jwt;
+package com.tangerine.theatre_manager.global.auth;
 
 import java.util.List;
 import java.util.Objects;

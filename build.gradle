@@ -22,27 +22,33 @@ dependencies {
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // jpa
+    // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // jasypt
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
-    // mysql
+    // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Restdocs
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-    // spring security
+    // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     // jwt
     implementation 'com.auth0:java-jwt:4.4.0'
 
     // lombok
-    compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
 test {
