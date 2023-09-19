@@ -9,6 +9,7 @@ import com.tangerine.theatre_manager.order.model.vo.OrderStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Order {
     @Embedded
     private Price price;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private OrderStatus orderStatus;
 
     @CreatedDate
