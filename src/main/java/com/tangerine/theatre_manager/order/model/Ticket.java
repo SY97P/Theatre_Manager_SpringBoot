@@ -4,12 +4,12 @@ import com.tangerine.theatre_manager.global.price.Price;
 import com.tangerine.theatre_manager.performance.model.Performance;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,11 +28,11 @@ public class Ticket {
     @Embedded
     private Price price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance_id", nullable = false)
     private Performance performance;
 
@@ -40,6 +40,10 @@ public class Ticket {
         this.price = price;
         this.order = order;
         this.performance = performance;
+    }
+
+    public long getPriceValue() {
+        return price.getValue();
     }
 
     public void setOrder(Order order) {

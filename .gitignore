@@ -5,6 +5,8 @@
 todo.md
 HELP.md
 src/main/resources/encryptor_info.txt
+build/
+.gradle/
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
