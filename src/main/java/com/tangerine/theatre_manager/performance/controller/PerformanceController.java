@@ -27,6 +27,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping(path = "/performances", produces = APPLICATION_JSON_VALUE)
 public class PerformanceController {
 
+    //TODO : 권한 별 필터 어노테이션 붙여주기
+
     private final PerformanceService performanceService;
 
     public PerformanceController(PerformanceService performanceService) {
@@ -89,4 +91,5 @@ public class PerformanceController {
                 .status(OK)
                 .body(response);
     }
+
 }
