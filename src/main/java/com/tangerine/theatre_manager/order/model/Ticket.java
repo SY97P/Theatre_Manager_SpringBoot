@@ -1,7 +1,6 @@
 package com.tangerine.theatre_manager.order.model;
 
 import com.tangerine.theatre_manager.global.price.Price;
-import com.tangerine.theatre_manager.order.model.Order;
 import com.tangerine.theatre_manager.performance.model.Performance;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

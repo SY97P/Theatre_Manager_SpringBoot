@@ -22,4 +22,5 @@ public class Title {
         Assert.isTrue(StringUtils.isNotBlank(value), "공연 타이틀이 주어지지 않았습니다.");
         this.value = value;
     }
+
 }

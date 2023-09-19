@@ -8,6 +8,7 @@ import com.tangerine.theatre_manager.performance.model.vo.Title;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,13 +34,13 @@ public class Performance {
     @Embedded
     private Title title;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Genre genre;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private AgeRate ageRate;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Stage stage;
 
     @Embedded
@@ -62,5 +63,36 @@ public class Performance {
         this.price = price;
         this.openRun = openRun;
         this.closeRun = closeRun;
+    }
+
+    public String getTitleValue() {
+        return title.getValue();
+    }
+
+    public String getGenreName() {
+        return genre.name();
+    }
+
+    public String getAgeRateName() {
+        return ageRate.name();
+    }
+
+    public String getStageName() {
+        return stage.name();
+    }
+
+    public long getPriceValue() {
+        return price.getValue();
+    }
+
+    public Performance update(Performance performance) {
+        this.title = performance.getTitle();
+        this.genre = performance.getGenre();
+        this.ageRate = performance.getAgeRate();
+        this.stage = performance.getStage();
+        this.price = performance.getPrice();
+        this.openRun = performance.getOpenRun();
+        this.closeRun = performance.getCloseRun();
+        return this;
     }
 }
