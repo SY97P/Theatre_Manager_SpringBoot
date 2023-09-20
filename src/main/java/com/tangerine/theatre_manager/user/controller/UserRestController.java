@@ -5,8 +5,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
+import com.tangerine.theatre_manager.user.service.UserResponses;
 import com.tangerine.theatre_manager.user.service.dto.UserResponse;
 import com.tangerine.theatre_manager.user.service.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -54,6 +56,16 @@ public class UserRestController {
         return ResponseEntity
                 .status(OK)
                 .body("요청이 성공적으로 접수되었습니다.");
+    }
+
+    @GetMapping(path = "/company")
+    public ResponseEntity<UserResponses> readAllCompanyGrantRequest(
+            Pageable pageable
+    ) {
+        UserResponses responses = userService.findAllCompanyGrantRequest(pageable);
+        return ResponseEntity
+                .status(OK)
+                .body(responses);
     }
 
 }
