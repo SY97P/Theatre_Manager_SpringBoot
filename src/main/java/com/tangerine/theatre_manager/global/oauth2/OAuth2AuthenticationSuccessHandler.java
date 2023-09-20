@@ -8,7 +8,7 @@ import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.jwt.Claims;
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationProvider;
 import com.tangerine.theatre_manager.performance.model.vo.AgeRate;
-import com.tangerine.theatre_manager.user.UserService;
+import com.tangerine.theatre_manager.user.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

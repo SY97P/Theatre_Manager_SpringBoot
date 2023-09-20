@@ -2,7 +2,9 @@ package com.tangerine.theatre_manager.global.jwt;
 
 import static io.micrometer.common.util.StringUtils.isNotEmpty;
 
+import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
+import com.tangerine.theatre_manager.performance.model.vo.AgeRate;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -48,10 +50,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private void setSecurityContext(String token, HttpServletRequest request) {
         Claims claims = verify(token);
 
-        String email = claims.getEmail();
-        String ageRate = claims.getAgeRate();
+        Email email = new Email(claims.getEmail());
+        AgeRate ageRate = AgeRate.valueOf(claims.getAgeRate());
         List<GrantedAuthority> authorities = getAuthorities(claims.getRoles());
-        JwtPrincipal principal = new JwtPrincipal(email, ageRate, authorities);
+        JwtPrincipal principal = new JwtPrincipal(email.getAddress(), ageRate.name(), authorities);
 
         if (!authorities.isEmpty()) {
             JwtAuthenticationToken authentication = new JwtAuthenticationToken(principal, null, authorities);

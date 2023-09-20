@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.user;
+package com.tangerine.theatre_manager.user.model;
 
 
 import com.tangerine.theatre_manager.global.auth.Role;
@@ -9,6 +9,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,19 +28,30 @@ public class User {
     private AgeRate ageRate;
 
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
 
-    public User(String email, AgeRate ageRate, Role role) {
+    public User(String email, AgeRate ageRate, List<Role> roles) {
         this.email = email;
         this.ageRate = ageRate;
-        this.role = role;
+        this.roles = roles;
     }
 
-    public String getRoleName() {
-        return role.name();
+    public String getAgeRateName() {
+        return ageRate.name();
+    }
+
+    public List<String> getRoleNames() {
+        return roles.stream()
+                .map(Role::name)
+                .toList();
     }
 
     public void setAgeRate(AgeRate ageRate) {
         this.ageRate = ageRate;
+    }
+
+    public User addRole(Role role) {
+        this.roles.add(role);
+        return this;
     }
 }

@@ -6,7 +6,7 @@ import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationFilter;
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationProvider;
 import com.tangerine.theatre_manager.global.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.tangerine.theatre_manager.global.oauth2.OAuth2AuthenticationSuccessHandler;
-import com.tangerine.theatre_manager.user.UserService;
+import com.tangerine.theatre_manager.user.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

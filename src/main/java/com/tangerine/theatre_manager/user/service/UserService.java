@@ -1,8 +1,13 @@
-package com.tangerine.theatre_manager.user;
+package com.tangerine.theatre_manager.user.service;
 
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.auth.Role;
 import com.tangerine.theatre_manager.performance.model.vo.AgeRate;
+import com.tangerine.theatre_manager.user.controller.UserResponse;
+import com.tangerine.theatre_manager.user.model.User;
+import com.tangerine.theatre_manager.user.model.UserDetailsImpl;
+import com.tangerine.theatre_manager.user.repository.UserRepository;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +42,7 @@ public class UserService implements UserDetailsService {
                 .orElseGet(() -> userRepository.save(
                         new User(email,
                                 AgeRate.KID_AVAILABLE,
-                                Role.USER)));
+                                List.of(Role.USER))));
         return new UserDetailsImpl(userEntity);
     }
 
@@ -47,8 +52,15 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void bindUserAgeRate(JwtPrincipal principal) {
-        this.findByEmail(principal.email())
-                .get()
+        this.findByEmail(principal.email()).get()
                 .setAgeRate(AgeRate.valueOf(principal.ageRange()));
+    }
+
+    @Transactional
+    public UserResponse giveCompanyGrant(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email + " 유저는 존재하지 않습니다."))
+                .addRole(Role.COMPANY);
+        return UserResponse.of(user);
     }
 }
