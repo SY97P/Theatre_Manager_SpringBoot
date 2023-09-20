@@ -2,6 +2,7 @@ package com.tangerine.theatre_manager.performance.service;
 
 import com.tangerine.theatre_manager.global.exception.PerformanceException;
 import com.tangerine.theatre_manager.performance.model.Performance;
+import com.tangerine.theatre_manager.performance.model.vo.Title;
 import com.tangerine.theatre_manager.performance.repository.PerformanceRepository;
 import com.tangerine.theatre_manager.performance.service.dto.PerformanceParam;
 import com.tangerine.theatre_manager.performance.service.dto.PerformanceResponse;
@@ -47,7 +48,7 @@ public class PerformanceService {
         return PerformanceResponse.of(performance);
     }
 
-    public PerformanceResponses findPerformanceByTitle(String title, Pageable pageable) {
+    public PerformanceResponses findPerformanceByTitle(Title title, Pageable pageable) {
         Page<Performance> performances = performanceRepository.findByTitle(title, pageable);
         return PerformanceResponses.of(performances);
     }

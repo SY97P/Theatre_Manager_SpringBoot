@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.tangerine.theatre_manager.performance.controller.dto.PerformanceRequest;
+import com.tangerine.theatre_manager.performance.model.vo.Title;
 import com.tangerine.theatre_manager.performance.service.PerformanceResponses;
 import com.tangerine.theatre_manager.performance.service.PerformanceService;
 import com.tangerine.theatre_manager.performance.service.dto.PerformanceResponse;
@@ -88,7 +89,7 @@ public class PerformanceRestController {
             @RequestParam String title,
             Pageable pageable
     ) {
-        PerformanceResponses responses = performanceService.findPerformanceByTitle(title, pageable);
+        PerformanceResponses responses = performanceService.findPerformanceByTitle(new Title(title), pageable);
         return ResponseEntity
                 .status(OK)
                 .body(responses);

@@ -3,8 +3,8 @@ package com.tangerine.theatre_manager.order.model;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 
+import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.price.Price;
-import com.tangerine.theatre_manager.order.model.vo.Email;
 import com.tangerine.theatre_manager.order.model.vo.OrderStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;

@@ -10,14 +10,14 @@ import org.springframework.util.Assert;
 public class Claims {
 
     private String email;
-    private String ageRange;
+    private String ageRate;
     private String[] roles;
     private Date issuedAt;
     private Date expiresAt;
 
     Claims(DecodedJWT decodedJWT) {
         this.email = getEmailFromClaim(decodedJWT);
-        this.ageRange = getAgeRangeFromClaim(decodedJWT);
+        this.ageRate = getAgeRangeFromClaim(decodedJWT);
         this.roles = getRolesFromClaim(decodedJWT);
         this.issuedAt = decodedJWT.getIssuedAt();
         this.expiresAt = decodedJWT.getExpiresAt();
@@ -29,7 +29,7 @@ public class Claims {
     public static Claims from(String email, String ageRange, String[] roles) {
         Claims claims = new Claims();
         claims.email = email;
-        claims.ageRange = ageRange;
+        claims.ageRate = ageRange;
         claims.roles = roles;
         return claims;
     }
@@ -41,9 +41,9 @@ public class Claims {
     }
 
     private String getAgeRangeFromClaim(DecodedJWT decodedJWT) {
-        Claim ageRange = decodedJWT.getClaim("ageRange");
-        Assert.notNull(ageRange, "roles is not in claim");
-        return ageRange.asString();
+        Claim ageRate = decodedJWT.getClaim("ageRate");
+        Assert.notNull(ageRate, "roles is not in claim");
+        return ageRate.asString();
     }
 
     private String[] getRolesFromClaim(DecodedJWT decodedJWT) {
@@ -56,8 +56,8 @@ public class Claims {
         return email;
     }
 
-    public String getAgeRange() {
-        return ageRange;
+    public String getAgeRate() {
+        return ageRate;
     }
 
     public String[] getRoles() {
@@ -68,7 +68,7 @@ public class Claims {
     public String toString() {
         return new StringJoiner(", ", Claims.class.getSimpleName() + "[", "]")
                 .add("email='" + email + "'")
-                .add("ageRange='" + ageRange + "'")
+                .add("ageRate='" + ageRate + "'")
                 .add("roles=" + Arrays.toString(roles))
                 .add("issuedAt=" + issuedAt)
                 .add("expiresAt=" + expiresAt)

@@ -1,4 +1,0 @@
-enc_key1234!
-jdbc:mysql://localhost/theatre_manager
-root
-root1234!
