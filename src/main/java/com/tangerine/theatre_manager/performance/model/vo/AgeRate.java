@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.performance.model.vo;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.FORBIDDEN_AGE;
+
 import com.tangerine.theatre_manager.global.exception.ForbiddenAgeException;
 import java.util.Arrays;
 
@@ -29,7 +31,7 @@ public enum AgeRate {
             return Arrays.stream(AgeRate.values())
                     .filter(ageRate -> ageRate.getAgeBound() > upperBound)
                     .findFirst()
-                    .orElseThrow(() -> new ForbiddenAgeException());
+                    .orElseThrow(() -> new ForbiddenAgeException(FORBIDDEN_AGE));
         } catch (ArrayIndexOutOfBoundsException exception) {
             return AgeRate.ADULT_AVAILABLE;
         }

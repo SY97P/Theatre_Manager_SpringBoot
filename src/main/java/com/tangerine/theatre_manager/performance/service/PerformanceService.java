@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.performance.service;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_FOUND_PERFORMANCE;
+
 import com.tangerine.theatre_manager.global.exception.PerformanceException;
 import com.tangerine.theatre_manager.performance.model.Performance;
 import com.tangerine.theatre_manager.performance.model.vo.Title;
@@ -32,7 +34,7 @@ public class PerformanceService {
             Long performanceId, PerformanceParam param
     ) {
         Performance performance = performanceRepository.findById(performanceId)
-                .orElseThrow(() -> new PerformanceException());
+                .orElseThrow(() -> new PerformanceException(NOT_FOUND_PERFORMANCE));
         Performance updated = performance.update(PerformanceParam.to(param));
         return PerformanceResponse.of(updated);
     }
@@ -44,7 +46,7 @@ public class PerformanceService {
 
     public PerformanceResponse findPerformance(Long performanceId) {
         Performance performance = performanceRepository.findById(performanceId)
-                .orElseThrow(() -> new PerformanceException());
+                .orElseThrow(() -> new PerformanceException(NOT_FOUND_PERFORMANCE));
         return PerformanceResponse.of(performance);
     }
 

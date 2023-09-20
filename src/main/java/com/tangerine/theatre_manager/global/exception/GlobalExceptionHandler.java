@@ -1,7 +1,8 @@
 package com.tangerine.theatre_manager.global.exception;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
@@ -14,8 +15,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetail> internalServerErrorException(Exception exception) {
-        log.error("Internal Server Error: {}", exception);
-        ErrorResponse errorResponse = ErrorResponse.create(exception, HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러");
+        log.error("Internal Server Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, INTERNAL_SERVER_ERROR, "서버 에러");
         return ResponseEntity
                 .status(errorResponse.getStatusCode())
                 .body(errorResponse.getBody());
@@ -23,17 +24,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthorizedException.class)
     public ResponseEntity<ProblemDetail> authorizedException(AuthorizedException exception) {
-        log.warn("Authorization Error: {}", exception);
-        ErrorResponse errorResponse = ErrorResponse.create(exception, HttpStatus.FORBIDDEN, "권한이 부족합니다.");
+        log.warn("Authorization Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
         return ResponseEntity
                 .status(errorResponse.getStatusCode())
                 .body(errorResponse.getBody());
     }
 
-    @ExceptionHandler(PerformanceException.class)
-    public ResponseEntity<ProblemDetail> performanceException(PerformanceException exception) {
-        log.warn("Performance Error: {}", exception);
-        ErrorResponse errorResponse = ErrorResponse.create(exception, HttpStatus.BAD_REQUEST, "암튼 부적절함");
+    @ExceptionHandler(ForbiddenAgeException.class)
+    public ResponseEntity<ProblemDetail> authorizedException(ForbiddenAgeException exception) {
+        log.warn("ForbiddenAge Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
+        return ResponseEntity
+                .status(errorResponse.getStatusCode())
+                .body(errorResponse.getBody());
+    }
+
+    @ExceptionHandler(GrantRequestException.class)
+    public ResponseEntity<ProblemDetail> authorizedException(GrantRequestException exception) {
+        log.warn("GrantRequest Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
         return ResponseEntity
                 .status(errorResponse.getStatusCode())
                 .body(errorResponse.getBody());
@@ -41,8 +54,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderException.class)
     public ResponseEntity<ProblemDetail> orderException(OrderException exception) {
-        log.warn("Performance Error: {}", exception);
-        ErrorResponse errorResponse = ErrorResponse.create(exception, HttpStatus.BAD_REQUEST, "암튼 부적절함");
+        log.warn("Performance Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
+        return ResponseEntity
+                .status(errorResponse.getStatusCode())
+                .body(errorResponse.getBody());
+    }
+
+    @ExceptionHandler(PerformanceException.class)
+    public ResponseEntity<ProblemDetail> performanceException(PerformanceException exception) {
+        log.warn("Performance Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
+        return ResponseEntity
+                .status(errorResponse.getStatusCode())
+                .body(errorResponse.getBody());
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ProblemDetail> performanceException(UserException exception) {
+        log.warn("User Error: ", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, exception.getErrorStatus(),
+                exception.getMessage());
         return ResponseEntity
                 .status(errorResponse.getStatusCode())
                 .body(errorResponse.getBody());

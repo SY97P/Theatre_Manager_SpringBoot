@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.order.service;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_FOUND_ORDER;
+
 import com.tangerine.theatre_manager.global.exception.OrderException;
 import com.tangerine.theatre_manager.order.model.Order;
 import com.tangerine.theatre_manager.order.model.Ticket;
@@ -27,7 +29,7 @@ public class OrderService {
     @Transactional
     public OrderResponse editOrderStatus(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException())
+                .orElseThrow(() -> new OrderException(NOT_FOUND_ORDER))
                 .changeNextOrderStatus();
         return OrderResponse.of(order);
     }
@@ -39,7 +41,7 @@ public class OrderService {
 
     public OrderResponse findOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException());
+                .orElseThrow(() -> new OrderException(NOT_FOUND_ORDER));
         return OrderResponse.of(order);
     }
 

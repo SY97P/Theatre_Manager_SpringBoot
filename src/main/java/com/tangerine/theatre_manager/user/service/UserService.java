@@ -1,16 +1,20 @@
 package com.tangerine.theatre_manager.user.service;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_FOUND_USER;
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_REQUEST_USER;
+
 import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.auth.Role;
 import com.tangerine.theatre_manager.global.exception.GrantRequestException;
+import com.tangerine.theatre_manager.global.exception.UserException;
 import com.tangerine.theatre_manager.performance.model.vo.AgeRate;
 import com.tangerine.theatre_manager.user.model.GrantRequest;
-import com.tangerine.theatre_manager.user.repository.GrantRequestRepository;
-import com.tangerine.theatre_manager.user.service.dto.UserResponse;
 import com.tangerine.theatre_manager.user.model.User;
 import com.tangerine.theatre_manager.user.model.UserDetailsImpl;
+import com.tangerine.theatre_manager.user.repository.GrantRequestRepository;
 import com.tangerine.theatre_manager.user.repository.UserRepository;
+import com.tangerine.theatre_manager.user.service.dto.UserResponse;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -66,7 +70,7 @@ public class UserService implements UserDetailsService {
     public UserResponse giveCompanyGrant(Email email) {
         User user = getUser(email).addRole(Role.COMPANY);
         grantRequestRepository.findByUser(user)
-                .orElseThrow(() -> new GrantRequestException())
+                .orElseThrow(() -> new GrantRequestException(NOT_REQUEST_USER))
                 .giveGrant();
         return UserResponse.of(user);
     }
@@ -74,13 +78,13 @@ public class UserService implements UserDetailsService {
     public void requestCompanyGrant(Email email) {
         User user = getUser(email);
         grantRequestRepository.findByUser(user)
-                        .orElse(grantRequestRepository.save(
-                                new GrantRequest(false, user)));
+                .orElse(grantRequestRepository.save(
+                        new GrantRequest(false, user)));
     }
 
     private User getUser(Email email) {
         return this.findByEmail(email.getAddress())
-                .orElseThrow(() -> new UsernameNotFoundException(email + " 유저는 존재하지 않습니다."));
+                .orElseThrow(() -> new UserException(NOT_FOUND_USER));
     }
 
     public UserResponses findAllCompanyGrantRequest(Pageable pageable) {

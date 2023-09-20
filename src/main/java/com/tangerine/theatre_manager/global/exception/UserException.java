@@ -2,11 +2,11 @@ package com.tangerine.theatre_manager.global.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class GrantRequestException extends RuntimeException {
+public class UserException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public GrantRequestException(ErrorCode errorCode) {
+    public UserException(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 

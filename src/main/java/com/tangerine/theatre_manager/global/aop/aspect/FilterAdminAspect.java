@@ -1,5 +1,7 @@
 package com.tangerine.theatre_manager.global.aop.aspect;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.FORBIDDEN_AUTH;
+
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.auth.Role;
 import com.tangerine.theatre_manager.global.exception.AuthorizedException;
@@ -30,7 +32,7 @@ public class FilterAdminAspect {
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(authority -> Objects.equals(authority, Role.ADMIN.name()));
         if (!isAdmin) {
-            throw new AuthorizedException();
+            throw new AuthorizedException(FORBIDDEN_AUTH);
         }
     }
 

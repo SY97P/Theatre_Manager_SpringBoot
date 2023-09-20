@@ -1,7 +1,11 @@
 package com.tangerine.theatre_manager.order.facade;
 
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_FOUND_PERFORMANCE;
+import static com.tangerine.theatre_manager.global.exception.ErrorCode.NOT_FOUND_USER;
+
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.exception.PerformanceException;
+import com.tangerine.theatre_manager.global.exception.UserException;
 import com.tangerine.theatre_manager.order.controller.OrderResponses;
 import com.tangerine.theatre_manager.order.model.Order;
 import com.tangerine.theatre_manager.order.model.Ticket;
@@ -16,7 +20,6 @@ import com.tangerine.theatre_manager.user.repository.UserRepository;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,12 +57,12 @@ public class OrderFacadeService {
 
     private Ticket makeTicketEntity(TicketParam ticketParam, Order order) {
         Performance performance = performanceRepository.findById(ticketParam.performanceId())
-                .orElseThrow(() -> new PerformanceException());
+                .orElseThrow(() -> new PerformanceException(NOT_FOUND_PERFORMANCE));
         return TicketParam.to(ticketParam, order, performance);
     }
 
     private User getUser() {
         return userRepository.findByEmail(principal.email())
-                .orElseThrow(() -> new UsernameNotFoundException("해당 이메일의 유저가 없습니다."));
+                .orElseThrow(() -> new UserException(NOT_FOUND_USER));
     }
 }
