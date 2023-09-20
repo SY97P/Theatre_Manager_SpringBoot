@@ -25,11 +25,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(path = "/performances", produces = APPLICATION_JSON_VALUE)
-public class PerformanceController {
+public class PerformanceRestController {
+
+    //TODO : 권한 별 필터 어노테이션 붙여주기
 
     private final PerformanceService performanceService;
 
-    public PerformanceController(PerformanceService performanceService) {
+    public PerformanceRestController(PerformanceService performanceService) {
         this.performanceService = performanceService;
     }
 
@@ -64,7 +66,7 @@ public class PerformanceController {
     public ResponseEntity<Void> deletePerformance(
             @PathVariable Long performanceId
     ) {
-        performanceService.deletePerformance(performanceId);
+        performanceService.removePerformance(performanceId);
         return ResponseEntity
                 .status(NO_CONTENT)
                 .build();
@@ -89,4 +91,5 @@ public class PerformanceController {
                 .status(OK)
                 .body(response);
     }
+
 }
