@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class JwtPrincipal {
 
     private String email;
-    private String ageRange;
+    private String ageRate;
     private List<GrantedAuthority> roles;
 
     public JwtPrincipal() {
@@ -18,11 +18,11 @@ public class JwtPrincipal {
 
     public JwtPrincipal(
             String email,
-            String ageRange,
+            String ageRate,
             List<GrantedAuthority> roles
     ) {
         this.email = email;
-        this.ageRange = ageRange;
+        this.ageRate = ageRate;
         this.roles = roles;
     }
 
@@ -35,7 +35,7 @@ public class JwtPrincipal {
     }
 
     public String ageRange() {
-        return ageRange == null ? getPrincipal().ageRange : ageRange;
+        return ageRate == null ? getPrincipal().ageRate : ageRate;
     }
 
     public List<GrantedAuthority> roles() {
@@ -52,20 +52,20 @@ public class JwtPrincipal {
         }
         var that = (JwtPrincipal) obj;
         return Objects.equals(this.email, that.email) &&
-                Objects.equals(this.ageRange, that.ageRange) &&
+                Objects.equals(this.ageRate, that.ageRate) &&
                 Objects.equals(this.roles, that.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, ageRange, roles);
+        return Objects.hash(email, ageRate, roles);
     }
 
     @Override
     public String toString() {
         return "JwtPrincipal[" +
                 "email=" + email + ", " +
-                "ageRange=" + ageRange + ", " +
+                "ageRange=" + ageRate + ", " +
                 "roles=" + roles + ']';
     }
 

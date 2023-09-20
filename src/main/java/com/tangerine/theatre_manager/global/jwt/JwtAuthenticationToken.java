@@ -11,7 +11,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private final Object principal;
     private final Object credentials;
 
-    JwtAuthenticationToken(
+    public JwtAuthenticationToken(
             Object principal,
             Object credentials,
             Collection<? extends GrantedAuthority> authorities

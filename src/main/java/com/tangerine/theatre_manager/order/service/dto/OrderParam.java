@@ -1,8 +1,8 @@
 package com.tangerine.theatre_manager.order.service.dto;
 
+import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.price.Price;
 import com.tangerine.theatre_manager.order.model.Order;
-import com.tangerine.theatre_manager.order.model.vo.Email;
 import com.tangerine.theatre_manager.order.model.vo.OrderStatus;
 import java.time.LocalDate;
 import java.util.List;

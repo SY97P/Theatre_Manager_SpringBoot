@@ -1,6 +1,6 @@
 package com.tangerine.theatre_manager.order.controller.vo;
 
-import com.tangerine.theatre_manager.order.model.vo.Email;
+import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.order.model.vo.OrderStatus;
 import com.tangerine.theatre_manager.order.service.dto.OrderParam;
 import jakarta.validation.constraints.NotBlank;

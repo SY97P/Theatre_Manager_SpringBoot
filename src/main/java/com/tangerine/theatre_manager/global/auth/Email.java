@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.order.model.vo;
+package com.tangerine.theatre_manager.global.auth;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;

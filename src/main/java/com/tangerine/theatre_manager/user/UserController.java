@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager;
+package com.tangerine.theatre_manager.user;
 
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;

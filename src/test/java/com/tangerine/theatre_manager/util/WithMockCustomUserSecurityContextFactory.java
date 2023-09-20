@@ -1,7 +1,7 @@
 package com.tangerine.theatre_manager.util;
 
-import com.babyblackdog.ddogdog.global.jwt.JwtAuthenticationPrincipal;
-import com.babyblackdog.ddogdog.global.jwt.JwtAuthenticationToken;
+import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
+import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationToken;
 import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -15,11 +15,10 @@ public class WithMockCustomUserSecurityContextFactory implements
     public SecurityContext createSecurityContext(WithMockCustomUser mockCustomUser) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
+        JwtPrincipal jwtPrincipal = new JwtPrincipal(mockCustomUser.email(), mockCustomUser.ageRate(),
+                List.of(new SimpleGrantedAuthority(mockCustomUser.role())));
         JwtAuthenticationToken authentication =
-                new JwtAuthenticationToken(
-                        new JwtAuthenticationPrincipal(
-                                mockCustomUser.email()),
-                        null,
+                new JwtAuthenticationToken(jwtPrincipal, null,
                         List.of(new SimpleGrantedAuthority(mockCustomUser.role())));
         context.setAuthentication(authentication);
         return context;

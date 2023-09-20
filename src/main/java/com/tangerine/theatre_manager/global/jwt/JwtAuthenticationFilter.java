@@ -49,9 +49,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         Claims claims = verify(token);
 
         String email = claims.getEmail();
-        String ageRange = claims.getAgeRange();
+        String ageRate = claims.getAgeRate();
         List<GrantedAuthority> authorities = getAuthorities(claims.getRoles());
-        JwtPrincipal principal = new JwtPrincipal(email, ageRange, authorities);
+        JwtPrincipal principal = new JwtPrincipal(email, ageRate, authorities);
 
         if (!authorities.isEmpty()) {
             JwtAuthenticationToken authentication = new JwtAuthenticationToken(principal, null, authorities);

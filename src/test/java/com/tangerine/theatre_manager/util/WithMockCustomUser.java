@@ -13,6 +13,8 @@ public @interface WithMockCustomUser {
 
     String email() default "danaka@naver.com";
 
+    String ageRate() default "ADULT_AVAILABLE";
+
     String role() default "USER";
 
 }

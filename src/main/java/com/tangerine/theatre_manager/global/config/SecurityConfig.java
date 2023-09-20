@@ -6,6 +6,7 @@ import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationFilter;
 import com.tangerine.theatre_manager.global.jwt.JwtAuthenticationProvider;
 import com.tangerine.theatre_manager.global.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.tangerine.theatre_manager.global.oauth2.OAuth2AuthenticationSuccessHandler;
+import com.tangerine.theatre_manager.user.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,7 +52,9 @@ public class SecurityConfig {
                                 .authorizationRequestRepository(authorizationRequestRepository()))
                         .authorizedClientRepository(
                                 applicationContext.getBean(OAuth2AuthorizedClientRepository.class))
-                        .successHandler(oAuth2AuthenticationSuccessHandler(jwtAuthenticationProvider())))
+                        .successHandler(oAuth2AuthenticationSuccessHandler(
+                                jwtAuthenticationProvider(),
+                                applicationContext.getBean(UserService.class))))
                 .addFilterBefore(
                         jwtAuthenticationFilter(jwtAuthenticationProvider()),
                         AnonymousAuthenticationFilter.class)
@@ -88,8 +91,8 @@ public class SecurityConfig {
 
     @Bean
     public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler(
-            JwtAuthenticationProvider jwtAuthenticationProvider) {
-        return new OAuth2AuthenticationSuccessHandler(jwtAuthenticationProvider);
+            JwtAuthenticationProvider jwtAuthenticationProvider, UserService userService) {
+        return new OAuth2AuthenticationSuccessHandler(jwtAuthenticationProvider, userService);
     }
 
 }

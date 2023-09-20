@@ -39,7 +39,7 @@ public final class JwtAuthenticationProvider {
             builder.withExpiresAt(new Date(now.getTime() + expirySeconds * 1_000L));
         }
         builder.withClaim("email", claims.getEmail());
-        builder.withClaim("ageRange", claims.getAgeRange());
+        builder.withClaim("ageRange", claims.getAgeRate());
         builder.withArrayClaim("roles", claims.getRoles());
         return builder.sign(algorithm);
     }
