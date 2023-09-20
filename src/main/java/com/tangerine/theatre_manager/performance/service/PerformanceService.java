@@ -37,7 +37,7 @@ public class PerformanceService {
     }
 
     @Transactional
-    public void deletePerformance(Long performanceId) {
+    public void removePerformance(Long performanceId) {
         performanceRepository.deleteById(performanceId);
     }
 

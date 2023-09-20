@@ -39,4 +39,13 @@ public class GlobalExceptionHandler {
                 .body(errorResponse.getBody());
     }
 
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity<ProblemDetail> orderException(OrderException exception) {
+        log.warn("Performance Error: {}", exception);
+        ErrorResponse errorResponse = ErrorResponse.create(exception, HttpStatus.BAD_REQUEST, "암튼 부적절함");
+        return ResponseEntity
+                .status(errorResponse.getStatusCode())
+                .body(errorResponse.getBody());
+    }
+
 }
