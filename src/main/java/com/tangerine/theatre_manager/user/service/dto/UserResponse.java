@@ -1,4 +1,4 @@
-package com.tangerine.theatre_manager.user.controller;
+package com.tangerine.theatre_manager.user.service.dto;
 
 import com.tangerine.theatre_manager.user.model.User;
 import java.util.List;

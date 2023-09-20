@@ -51,7 +51,9 @@ public class User {
     }
 
     public User addRole(Role role) {
-        this.roles.add(role);
+        if (!this.roles.contains(role)) {
+            this.roles.add(role);
+        }
         return this;
     }
 }

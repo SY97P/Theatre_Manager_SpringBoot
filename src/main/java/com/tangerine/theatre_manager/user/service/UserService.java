@@ -1,9 +1,13 @@
 package com.tangerine.theatre_manager.user.service;
 
+import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.auth.Role;
+import com.tangerine.theatre_manager.global.exception.GrantRequestException;
 import com.tangerine.theatre_manager.performance.model.vo.AgeRate;
-import com.tangerine.theatre_manager.user.controller.UserResponse;
+import com.tangerine.theatre_manager.user.model.GrantRequest;
+import com.tangerine.theatre_manager.user.repository.GrantRequestRepository;
+import com.tangerine.theatre_manager.user.service.dto.UserResponse;
 import com.tangerine.theatre_manager.user.model.User;
 import com.tangerine.theatre_manager.user.model.UserDetailsImpl;
 import com.tangerine.theatre_manager.user.repository.UserRepository;
@@ -24,11 +28,11 @@ public class UserService implements UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final UserRepository userRepository;
-    private final JwtPrincipal principal;
+    private final GrantRequestRepository grantRequestRepository;
 
-    public UserService(UserRepository userRepository, JwtPrincipal principal) {
+    public UserService(UserRepository userRepository, GrantRequestRepository grantRequestRepository) {
         this.userRepository = userRepository;
-        this.principal = principal;
+        this.grantRequestRepository = grantRequestRepository;
     }
 
     @Override
@@ -52,15 +56,28 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void bindUserAgeRate(JwtPrincipal principal) {
-        this.findByEmail(principal.email()).get()
+        this.getUser(new Email(principal.email()))
                 .setAgeRate(AgeRate.valueOf(principal.ageRange()));
     }
 
     @Transactional
-    public UserResponse giveCompanyGrant(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(email + " 유저는 존재하지 않습니다."))
-                .addRole(Role.COMPANY);
+    public UserResponse giveCompanyGrant(Email email) {
+        User user = getUser(email).addRole(Role.COMPANY);
+        grantRequestRepository.findByUser(user)
+                .orElseThrow(() -> new GrantRequestException())
+                .giveGrant();
         return UserResponse.of(user);
+    }
+
+    public void requestCompanyGrant(Email email) {
+        User user = getUser(email);
+        grantRequestRepository.findByUser(user)
+                        .orElse(grantRequestRepository.save(
+                                new GrantRequest(false, user)));
+    }
+
+    private User getUser(Email email) {
+        return this.findByEmail(email.getAddress())
+                .orElseThrow(() -> new UsernameNotFoundException(email + " 유저는 존재하지 않습니다."));
     }
 }
