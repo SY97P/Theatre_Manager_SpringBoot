@@ -31,7 +31,7 @@ public class OrderFacadeService {
                 .map(ticketParam -> {
                     Performance performance = performanceRepository.findById(ticketParam.performanceId())
                             .orElseThrow(() -> new PerformanceException());
-                    return TicketParam.to(order, performance);
+                    return TicketParam.to(ticketParam, order, performance);
                 }).toList();
         order.addTickets(tickets);
         return OrderResponse.of(orderRepository.save(order));
