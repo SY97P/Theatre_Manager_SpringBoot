@@ -47,6 +47,11 @@ public class PerformanceService {
         return PerformanceResponse.of(performance);
     }
 
+    public PerformanceResponses findPerformanceByTitle(String title, Pageable pageable) {
+        Page<Performance> performances = performanceRepository.findByTitle(title, pageable);
+        return PerformanceResponses.of(performances);
+    }
+
     public PerformanceResponses findAllPerformances(Pageable pageable) {
         Page<Performance> performances = performanceRepository.findAll(pageable);
         return PerformanceResponses.of(performances);
