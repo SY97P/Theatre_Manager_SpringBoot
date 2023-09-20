@@ -47,4 +47,5 @@ public class OrderService {
         Page<Ticket> tickets = ticketRepository.findByPerformanceId(performanceId, pageable);
         return TicketResponses.of(tickets);
     }
+
 }

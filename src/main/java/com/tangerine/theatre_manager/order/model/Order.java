@@ -3,9 +3,9 @@ package com.tangerine.theatre_manager.order.model;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 
-import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.price.Price;
 import com.tangerine.theatre_manager.order.model.vo.OrderStatus;
+import com.tangerine.theatre_manager.user.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,6 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
@@ -35,8 +37,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private Email email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email", nullable = false)
+    private User user;
 
     @Embedded
     private Price totalPrice;
@@ -55,24 +58,16 @@ public class Order {
             orphanRemoval = true)
     private List<Ticket> tickets;
 
-    public Order(Email email, Price totalPrice, OrderStatus orderStatus, LocalDate orderDate) {
-        this.email = email;
+    public Order(User user, Price totalPrice, OrderStatus orderStatus, LocalDate orderDate) {
+        this.user = user;
         this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
         this.tickets = new ArrayList<>();
     }
 
-    public Order(Email email, Price totalPrice, OrderStatus orderStatus, LocalDate orderDate, List<Ticket> tickets) {
-        this.email = email;
-        this.totalPrice = totalPrice;
-        this.orderStatus = orderStatus;
-        this.orderDate = orderDate;
-        this.tickets = tickets;
-    }
-
-    public String getEmailAddress() {
-        return email.getAddress();
+    public String getEmail() {
+        return user.getEmail();
     }
 
     public long getTotalPriceValue() {

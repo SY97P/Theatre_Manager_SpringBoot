@@ -92,4 +92,14 @@ public class OrderRestController {
                 .status(OK)
                 .body(responses);
     }
+
+    @GetMapping(path = "/me")
+    public ResponseEntity<OrderResponses> readUserOrders(
+            Pageable pageable
+    ) {
+        OrderResponses responses = orderFacadeService.findUserOrders(pageable);
+        return ResponseEntity
+                .status(OK)
+                .body(responses);
+    }
 }

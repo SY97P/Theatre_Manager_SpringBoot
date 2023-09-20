@@ -16,7 +16,7 @@ public record OrderResponse(
     public static OrderResponse of(Order order) {
         return new OrderResponse(
                 order.getId(),
-                order.getEmailAddress(),
+                order.getEmail(),
                 order.getTotalPriceValue(),
                 order.getOrderStatusName(),
                 order.getOrderDate(),
