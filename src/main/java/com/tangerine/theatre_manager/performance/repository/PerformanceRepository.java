@@ -1,28 +1,13 @@
 package com.tangerine.theatre_manager.performance.repository;
 
-import com.tangerine.theatre_manager.performance.repository.model.Performance;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
+import com.tangerine.theatre_manager.performance.model.Performance;
+import com.tangerine.theatre_manager.performance.model.vo.Title;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
+public interface PerformanceRepository extends JpaRepository<Performance, Long> {
 
-public interface PerformanceRepository {
-
-    void insert(Performance performance);
-
-    void update(Performance performance);
-
-    void deleteAll();
-
-    void deleteById(UUID performanceId);
-
-    List<Performance> findAll();
-
-    Performance findById(UUID performanceId);
-
-    Performance findByName(PerformanceName performanceName);
-
-    Performance findByDate(LocalDate date);
+    Page<Performance> findByTitle(Title title, Pageable pageable);
 
 }

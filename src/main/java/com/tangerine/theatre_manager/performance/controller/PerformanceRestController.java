@@ -1,80 +1,108 @@
 package com.tangerine.theatre_manager.performance.controller;
 
-import com.tangerine.theatre_manager.global.response.SuccessCode;
-import com.tangerine.theatre_manager.performance.controller.dto.CreatePerformanceRequest;
-import com.tangerine.theatre_manager.performance.controller.dto.PerformanceResponse;
-import com.tangerine.theatre_manager.performance.controller.dto.UpdatePerformanceRequest;
-import com.tangerine.theatre_manager.performance.controller.mapper.PerformanceControllerMapper;
-import com.tangerine.theatre_manager.performance.service.PerformanceService;
-import com.tangerine.theatre_manager.performance.vo.PerformanceName;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import java.text.MessageFormat;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
+import com.tangerine.theatre_manager.performance.controller.dto.PerformanceRequest;
+import com.tangerine.theatre_manager.performance.model.vo.Title;
+import com.tangerine.theatre_manager.performance.service.PerformanceResponses;
+import com.tangerine.theatre_manager.performance.service.PerformanceService;
+import com.tangerine.theatre_manager.performance.service.dto.PerformanceResponse;
+import java.net.URI;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(path = "/api/v1/performances")
+@RequestMapping(path = "/performances", produces = APPLICATION_JSON_VALUE)
 public class PerformanceRestController {
 
-    private final PerformanceService service;
-    private final PerformanceControllerMapper mapper;
+    //TODO : 권한 별 필터 어노테이션 붙여주기
 
-    public PerformanceRestController(PerformanceService service, PerformanceControllerMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
+    private final PerformanceService performanceService;
+
+    public PerformanceRestController(PerformanceService performanceService) {
+        this.performanceService = performanceService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> registerPerformance(@RequestBody CreatePerformanceRequest request) {
-        UUID registeredId = service.createPerformance(mapper.requestToParam(request));
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PerformanceResponse> createPerformance(
+            @Validated @RequestBody PerformanceRequest request
+    ) {
+        PerformanceResponse response = performanceService.registerPerformance(PerformanceRequest.to(request));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{performanceId}")
+                .buildAndExpand(response.id())
+                .toUri();
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(MessageFormat.format("{0} {1}", registeredId, SuccessCode.PERFORMANCE_SAVE_SUCCESS));
+                .status(CREATED)
+                .location(location)
+                .body(response);
     }
 
-    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updatePerformance(@RequestBody UpdatePerformanceRequest request) {
-        UUID updatedId = service.updatePerformance(mapper.requestToParam(request));
+    @PutMapping(path = "/{performanceId}", consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PerformanceResponse> updatePerformance(
+            @PathVariable Long performanceId,
+            @Validated @RequestBody PerformanceRequest request
+    ) {
+        PerformanceResponse response = performanceService.editPerformance(
+                performanceId, PerformanceRequest.to(request));
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(MessageFormat.format("{0} {1}", updatedId, SuccessCode.PERFORMANCE_UPDATE_SUCCESS));
+                .status(OK)
+                .body(response);
     }
 
-    @DeleteMapping("/{performanceId}")
-    public ResponseEntity<String> unregisterPerformanceById(@PathVariable UUID performanceId) {
-        UUID deletedId = service.deletePerformanceById(performanceId);
+    @DeleteMapping(path = "/{performanceId}")
+    public ResponseEntity<Void> deletePerformance(
+            @PathVariable Long performanceId
+    ) {
+        performanceService.removePerformance(performanceId);
         return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .body(MessageFormat.format("{0} {1}", deletedId, SuccessCode.PERFORMANCE_DELETE_SUCCESS));
+                .status(NO_CONTENT)
+                .build();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PerformanceResponse>> performanceList() {
-        return ResponseEntity.ok(
-                service.findAllPerformance()
-                        .stream()
-                        .map(mapper::resultToResponse)
-                        .toList());
+    @GetMapping(path = "/{performanceId}")
+    public ResponseEntity<PerformanceResponse> readPerformance(
+            @PathVariable Long performanceId
+    ) {
+        PerformanceResponse response = performanceService.findPerformance(performanceId);
+        return ResponseEntity
+                .status(OK)
+                .body(response);
     }
 
-    @GetMapping("/{performanceId}")
-    public ResponseEntity<PerformanceResponse> performanceById(@PathVariable UUID performanceId) {
-        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceById(performanceId)));
+    @GetMapping
+    public ResponseEntity<PerformanceResponses> readPerformanceByTitle(
+            @RequestParam String title,
+            Pageable pageable
+    ) {
+        PerformanceResponses responses = performanceService.findPerformanceByTitle(new Title(title), pageable);
+        return ResponseEntity
+                .status(OK)
+                .body(responses);
     }
 
-    @GetMapping("/name/{performanceName}")
-    public ResponseEntity<PerformanceResponse> performanceByName(@PathVariable PerformanceName performanceName) {
-        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceByName(performanceName)));
-    }
-
-    @GetMapping("/date/{date}")
-    public ResponseEntity<PerformanceResponse> performanceByDate(@PathVariable LocalDate date) {
-        return ResponseEntity.ok(mapper.resultToResponse(service.findPerformanceByDate(date)));
+    @GetMapping(path = "/all")
+    public ResponseEntity<PerformanceResponses> readAllPerformance(
+            Pageable pageable
+    ) {
+        PerformanceResponses response = performanceService.findAllPerformances(pageable);
+        return ResponseEntity
+                .status(OK)
+                .body(response);
     }
 
 }

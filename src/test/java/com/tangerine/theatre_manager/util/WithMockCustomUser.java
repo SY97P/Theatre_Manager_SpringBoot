@@ -1,0 +1,20 @@
+package com.tangerine.theatre_manager.util;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.springframework.security.test.context.support.WithSecurityContext;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@WithSecurityContext(factory = WithMockCustomUserSecurityContextFactory.class)
+public @interface WithMockCustomUser {
+
+    String email() default "danaka@naver.com";
+
+    String ageRate() default "ADULT_AVAILABLE";
+
+    String role() default "USER";
+
+}

@@ -1,0 +1,87 @@
+classDiagram
+
+%% domain Order
+    class Order {
+        Long id
+        Email email
+        Price totalPrice
+        OrderStatus orderStatus
+        LocalDate orderedDate
+        LocalDate updatedDate
+    }
+
+    class Email {
+        String address
+    }
+
+    class Price {
+        long value
+    }
+
+    class OrderStatus {
+        <<enumeration>>
+        ACCEPTED
+        PAYMENT_DONE
+        OUTDATED
+    }
+
+    Order --> Email
+    Order --> Price
+    Order --> OrderStatus
+%% domain Ticket
+    class Ticket {
+        Long id
+        Order order
+        Performance performance
+        Price price
+    %%        Seat seat
+    }
+
+    Ticket --> Order
+    Ticket --> Performance
+    Ticket --> Price
+%% domain Performance
+    class Performance {
+        Long id
+        PerformanceName title
+        Genre genre
+        AgeRate ageRate
+        LocalDate openRun
+        LocalDate closeRun
+        Stage stage
+        Price price
+    }
+
+    class PerformanceName {
+        String performanceNameValue
+    }
+
+    class Genre {
+        <<enumeration>>
+        OPERA
+        PLAY
+        MUSICAL
+    }
+
+    class AgeRate {
+        <<enumeration>>
+        ALL(0)
+        FIFTEEN(15)
+        ADULT_ONLY(19)
+    }
+
+    class Stage {
+        <<enumeration>>
+        A1, A2,
+        B1, B2
+    }
+
+    class Price {
+        long priceValue
+    }
+
+    Performance --> PerformanceName
+    Performance --> Genre
+    Performance --> AgeRate
+    Performance --> Stage
+    Performance --> Price
