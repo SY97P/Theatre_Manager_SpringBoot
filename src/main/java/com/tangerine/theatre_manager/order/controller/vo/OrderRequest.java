@@ -8,14 +8,13 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record OrderRequest(
-        @NotBlank String orderStatus,
         @NotNull @NotEmpty
         List<TicketRequest> tickets
 ) {
 
     public static OrderParam to(OrderRequest request) {
         return new OrderParam(
-                OrderStatus.valueOf(request.orderStatus),
+                OrderStatus.ACCEPTED,
                 request.tickets.stream()
                         .map(TicketRequest::to)
                         .toList()
