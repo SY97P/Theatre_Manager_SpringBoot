@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void bindUserAgeRate(JwtPrincipal principal) {
         this.getUser(new Email(principal.email()))
-                .setAgeRate(AgeRate.valueOf(principal.ageRange()));
+                .setAgeRate(AgeRate.valueOf(principal.ageRate()));
     }
 
     @Transactional

@@ -34,10 +34,10 @@ public class UserRestController {
         return """
                 {
                     "email": "%s",
-                    "ageRange": "%s",
+                    "ageRate": "%s",
                     "roles": "%s"
                 }
-                """.formatted(jwtPrincipal.email(), jwtPrincipal.ageRange(), jwtPrincipal.roles());
+                """.formatted(jwtPrincipal.email(), jwtPrincipal.ageRate(), jwtPrincipal.roles());
     }
 
     @PatchMapping(path = "/company/{email}")

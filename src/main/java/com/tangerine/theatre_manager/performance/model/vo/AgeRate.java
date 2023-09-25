@@ -4,7 +4,9 @@ import static com.tangerine.theatre_manager.global.exception.ErrorCode.FORBIDDEN
 
 import com.tangerine.theatre_manager.global.exception.ForbiddenAgeException;
 import java.util.Arrays;
+import lombok.Getter;
 
+@Getter
 public enum AgeRate {
     KID_AVAILABLE(14),
     TEEN_AVAILABLE(19),
@@ -35,9 +37,5 @@ public enum AgeRate {
         } catch (ArrayIndexOutOfBoundsException exception) {
             return AgeRate.ADULT_AVAILABLE;
         }
-    }
-
-    public int getAgeBound() {
-        return ageBound;
     }
 }

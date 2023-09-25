@@ -27,7 +27,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private AgeRate ageRate;
 
-    @Enumerated(value = EnumType.STRING)
     private List<Role> roles;
 
     public User(String email, AgeRate ageRate, List<Role> roles) {

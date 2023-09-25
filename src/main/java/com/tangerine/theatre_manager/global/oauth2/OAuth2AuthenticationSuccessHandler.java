@@ -1,8 +1,5 @@
 package com.tangerine.theatre_manager.global.oauth2;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import com.tangerine.theatre_manager.global.auth.Email;
 import com.tangerine.theatre_manager.global.auth.JwtPrincipal;
 import com.tangerine.theatre_manager.global.jwt.Claims;
@@ -15,8 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,11 +20,10 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.util.Assert;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class OAuth2AuthenticationSuccessHandler extends
         SavedRequestAwareAuthenticationSuccessHandler {
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final JwtAuthenticationProvider jwtProvider;
     private final UserService userService;
@@ -49,14 +43,19 @@ public class OAuth2AuthenticationSuccessHandler extends
             UserDetails userDetails = userService.loadUserByUsername(jwtPrincipal.email());
             userService.bindUserAgeRate(jwtPrincipal);
 
-            String loginSuccessJson = generateLoginSuccessJson(userDetails, jwtPrincipal);
-            response.setContentType(APPLICATION_JSON_VALUE);
-            response.setCharacterEncoding(UTF_8.name());
-            response.setContentLength(loginSuccessJson.getBytes(UTF_8).length);
-            response.getWriter().write(loginSuccessJson);
+            String token = generateToken(userDetails, jwtPrincipal);
+            String uri = getRedirectUrl(token);
+            getRedirectStrategy().sendRedirect(request, response, uri);
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
         }
+    }
+
+    private String getRedirectUrl(String token) {
+        return UriComponentsBuilder
+                .fromUriString("http://localhost:3000/authorized/" + token)
+                .build()
+                .toUriString();
     }
 
     private JwtPrincipal gatherPrincipal(OAuth2User oAuth2User) {
@@ -68,30 +67,17 @@ public class OAuth2AuthenticationSuccessHandler extends
         Assert.isTrue(account != null, "OAuth2User account is empty");
 
         Email email = new Email((String) account.get("email"));
-        AgeRate ageRange = AgeRate.parseRangeToRate((String) account.get("age_range"));
+        AgeRate ageRate = AgeRate.parseRangeToRate((String) account.get("age_range"));
         List<GrantedAuthority> roles = List.of(new SimpleGrantedAuthority("USER"));
 
-        return new JwtPrincipal(email.getAddress(), ageRange.name(), roles);
-    }
-
-    private String generateLoginSuccessJson(UserDetails userDetails, JwtPrincipal principal) {
-        String token = generateToken(userDetails, principal);
-        log.debug("Jwt({}) created for oauth2 login user", token);
-        return """
-                {
-                  "token": "%s",
-                  "email": "%s",
-                  "ageRate": "%s",
-                  "roles": "%s"
-                }
-                """.formatted(token, userDetails.getUsername(), principal.ageRange(), userDetails.getAuthorities());
+        return new JwtPrincipal(email.getAddress(), ageRate.name(), roles);
     }
 
     private String generateToken(UserDetails userDetails, JwtPrincipal jwtPrincipal) {
         return jwtProvider.sign(
                 Claims.from(
                         userDetails.getUsername(),
-                        jwtPrincipal.ageRange(),
+                        jwtPrincipal.ageRate(),
                         userDetails.getAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .toArray(String[]::new)));

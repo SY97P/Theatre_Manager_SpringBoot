@@ -17,7 +17,7 @@ public class Claims {
 
     Claims(DecodedJWT decodedJWT) {
         this.email = getEmailFromClaim(decodedJWT);
-        this.ageRate = getAgeRangeFromClaim(decodedJWT);
+        this.ageRate = getAgeRateFromClaim(decodedJWT);
         this.roles = getRolesFromClaim(decodedJWT);
         this.issuedAt = decodedJWT.getIssuedAt();
         this.expiresAt = decodedJWT.getExpiresAt();
@@ -26,10 +26,10 @@ public class Claims {
     private Claims() {
     }
 
-    public static Claims from(String email, String ageRange, String[] roles) {
+    public static Claims from(String email, String ageRate, String[] roles) {
         Claims claims = new Claims();
         claims.email = email;
-        claims.ageRate = ageRange;
+        claims.ageRate = ageRate;
         claims.roles = roles;
         return claims;
     }
@@ -40,9 +40,9 @@ public class Claims {
         return email.asString();
     }
 
-    private String getAgeRangeFromClaim(DecodedJWT decodedJWT) {
+    private String getAgeRateFromClaim(DecodedJWT decodedJWT) {
         Claim ageRate = decodedJWT.getClaim("ageRate");
-        Assert.notNull(ageRate, "roles is not in claim");
+        Assert.notNull(ageRate, "ageRate is not in claim");
         return ageRate.asString();
     }
 

@@ -34,7 +34,7 @@ public class JwtPrincipal {
         return email == null ? getPrincipal().email : email;
     }
 
-    public String ageRange() {
+    public String ageRate() {
         return ageRate == null ? getPrincipal().ageRate : ageRate;
     }
 
@@ -65,7 +65,7 @@ public class JwtPrincipal {
     public String toString() {
         return "JwtPrincipal[" +
                 "email=" + email + ", " +
-                "ageRange=" + ageRate + ", " +
+                "ageRate=" + ageRate + ", " +
                 "roles=" + roles + ']';
     }
 

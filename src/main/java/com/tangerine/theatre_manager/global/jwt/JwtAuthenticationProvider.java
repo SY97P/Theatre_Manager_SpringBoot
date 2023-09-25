@@ -6,7 +6,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.util.Date;
+import lombok.Getter;
 
+@Getter
 public final class JwtAuthenticationProvider {
 
     private final String header;
@@ -39,17 +41,13 @@ public final class JwtAuthenticationProvider {
             builder.withExpiresAt(new Date(now.getTime() + expirySeconds * 1_000L));
         }
         builder.withClaim("email", claims.getEmail());
-        builder.withClaim("ageRange", claims.getAgeRate());
+        builder.withClaim("ageRate", claims.getAgeRate());
         builder.withArrayClaim("roles", claims.getRoles());
         return builder.sign(algorithm);
     }
 
     public Claims verify(String token) throws JWTVerificationException {
         return new Claims(jwtVerifier.verify(token));
-    }
-
-    public String getHeader() {
-        return header;
     }
 
 }
